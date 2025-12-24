@@ -164,22 +164,22 @@
 
     .big-info {
       font-size: 26px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 20px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:20px;
     }
 
     .info-line {
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-size:20px;
+      margin-bottom:10px;
     }
 
     .info-logo {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      max-width: 150px;
-      opacity: 0.9;
+      position:absolute;
+      top:10px;
+      right:10px;
+      max-width:150px;
+      opacity:0.9;
     }
   </style>
 </head>
@@ -276,18 +276,27 @@
       <div class="info-line">Date Of Creation: <b>1922</b></div>
       <div class="info-line">Previous Head{s}: <b>None</b></div>
 
+      <!-- AUDIO PLAYER ALSO HERE -->
+      <div style="margin-top:30px; font-size:22px; font-weight:bold;">
+        CATLAND-PRESIDENTIAL-SPEECH_0001
+      </div>
+
+      <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
+        <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
+      </audio>
+
+      <!-- TRANSCRIPT ALSO HERE -->
       <div style="
-        margin-top:30px;
         font-size:24px;
         font-weight:bold;
         color:#333;
         font-family:'Fredoka One', sans-serif;
+        margin-bottom:10px;
       ">
-        Transcript
+        Transcript of CATLAND-PRESIDENTIAL-SPEECH_0001
       </div>
 
       <div style="
-        margin-top:10px;
         background:#f0f0f0;
         padding:15px;
         border-radius:10px;
@@ -310,10 +319,9 @@
 
       <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
         <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
       </audio>
 
-      <div onclick="goToTranscript()"
+      <div onclick="scrollToTranscript()"
            style="
              font-family: 'Fredoka One', sans-serif;
              font-size:20px;
@@ -323,6 +331,32 @@
              margin-top:10px;
            ">
         View Transcript...
+      </div>
+
+      <div id="transcriptSection" style="margin-top:30px;">
+
+        <div style="
+          font-size:24px;
+          font-weight:bold;
+          color:#333;
+          font-family:'Fredoka One', sans-serif;
+          margin-bottom:10px;
+        ">
+          Transcript of CATLAND-PRESIDENTIAL-SPEECH_0001
+        </div>
+
+        <div style="
+          background:#f0f0f0;
+          padding:15px;
+          border-radius:10px;
+          font-size:18px;
+          line-height:1.5;
+          font-family:Arial, sans-serif;
+          box-shadow:0 0 8px rgba(0,0,0,0.1);
+        ">
+          “As the new president I promise to maintain the beliefs of Catland as a whole.”
+        </div>
+
       </div>
 
     </div>
@@ -357,8 +391,7 @@
           searchBar.style.display = "none";
         } else {
           searchBar.style.display = "block";
-          searchBar.placeholder = "Search " + tab.textContent.toLowerCase() + "...";
-          filterItems();
+          searchBar.placeholder = "Search " + tab.textContent.toLowerCase();
         }
       });
     });
@@ -368,9 +401,9 @@
       extraInfoTab.click();
     }
 
-    function goToTranscript() {
-      extraInfoTab.classList.remove("hidden-tab");
-      extraInfoTab.click();
+    function scrollToTranscript() {
+      const section = document.getElementById("transcriptSection");
+      section.scrollIntoView({ behavior: "smooth" });
     }
 
     function toggleExt() {
@@ -390,18 +423,6 @@
       const wrapper = document.getElementById("deptWrapper");
       wrapper.classList.toggle("open");
       document.body.classList.toggle("dept-open");
-    }
-
-    function filterItems() {
-      const activeContent = document.querySelector(".content.active");
-      const items = activeContent.querySelectorAll(".item");
-      const text = searchBar.value.toLowerCase();
-
-      items.forEach(item => {
-        item.style.display = item.textContent.toLowerCase().includes(text)
-          ? "block"
-          : "none";
-      });
     }
   </script>
 
