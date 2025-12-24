@@ -139,6 +139,7 @@
       overflow-y: scroll;
       box-shadow: 0 0 10px rgba(0,0,0,0.15);
       display: none;
+      position: relative;
     }
 
     .content.active {
@@ -171,6 +172,15 @@
     .info-line {
       font-size: 20px;
       margin-bottom: 10px;
+    }
+
+    /* Logo in corner of Extra Info tab */
+    .info-logo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      max-width: 150px;
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -269,8 +279,10 @@
       </div>
     </div>
 
-    <!-- EXTRA INFO TAB (hidden until INFO is clicked) -->
+    <!-- EXTRA INFO TAB -->
     <div id="extrainfo" class="content">
+      <img src="bali_indonesia.png" class="info-logo">
+
       <div class="big-info">Department Information</div>
 
       <div class="info-line">Department Head: <b>James Honay</b></div>
@@ -290,9 +302,16 @@
     const tabs = document.querySelectorAll(".tab");
     const contents = document.querySelectorAll(".content");
     const searchBar = document.getElementById("searchBar");
+    const extraInfoTab = document.getElementById("extraInfoTab");
 
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
+
+        // If leaving Extra Info tab, hide it again
+        if (tab.dataset.tab !== "extrainfo") {
+          extraInfoTab.classList.add("hidden-tab");
+        }
+
         tabs.forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
 
@@ -310,9 +329,8 @@
     });
 
     function goToInfo() {
-      const infoTab = document.getElementById("extraInfoTab");
-      infoTab.classList.remove("hidden-tab");
-      infoTab.click();
+      extraInfoTab.classList.remove("hidden-tab");
+      extraInfoTab.click();
     }
 
     function toggleExt() {
