@@ -8,53 +8,60 @@
       padding: 0;
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
-      display: flex;
     }
 
-    /* LEFT SIDEBAR */
-    .sidebar {
-      width: 180px;
+    /* Collapsible Department Tab */
+    .dept-toggle {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-weight: bold;
+      cursor: pointer;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      z-index: 1000;
+    }
+
+    .dept-panel {
+      position: fixed;
+      top: 0;
+      left: -220px;
+      width: 200px;
+      height: 100vh;
       background-color: #2c2c2c;
       color: white;
-      height: 100vh;
-      padding-top: 20px;
-      position: fixed;
+      padding: 20px 10px;
+      overflow-y: auto;
+      transition: left 0.3s ease;
+      z-index: 999;
+    }
+
+    .dept-panel.open {
       left: 0;
-      top: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
 
-    .sidebar-title {
-      font-size: 20px;
+    .dept-title {
+      font-size: 18px;
       font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .sidebar-content {
-      width: 90%;
-      height: 80vh;
-      background-color: #3a3a3a;
-      border-radius: 8px;
-      padding: 10px;
-      overflow-y: scroll;
+      margin-bottom: 10px;
+      text-align: center;
     }
 
     .dept-item {
-      padding: 10px;
+      padding: 8px;
       border-bottom: 1px solid #555;
       font-size: 16px;
     }
 
-    .dept-item:last-child {
-      border-bottom: none;
-    }
-
-    /* MAIN PAGE AREA */
     .main {
-      margin-left: 200px;
-      width: calc(100% - 200px);
+      margin-left: 0;
+      padding-left: 20px;
     }
 
     .header {
@@ -144,18 +151,19 @@
 </head>
 <body>
 
-  <!-- LEFT SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-title">Departments</div>
-    <div class="sidebar-content" id="deptList">
-      <!-- EMPTY — you will add departments later -->
-      <!-- Example format:
+  <!-- Collapsible Department Tab -->
+  <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
+  <div class="dept-panel" id="deptPanel">
+    <div class="dept-title">Departments</div>
+    <div id="deptList">
+      <!-- Add departments here -->
+      <!-- Example:
       <div class="dept-item">Department of Catland Security</div>
       -->
     </div>
   </div>
 
-  <!-- MAIN PAGE -->
+  <!-- Main Content -->
   <div class="main">
 
     <div class="header">Welcome to The Catland Archive</div>
@@ -176,10 +184,8 @@
 
     <input type="text" id="searchBar" placeholder="Search documents..." style="display:none;">
 
-    <!-- HOME TAB -->
     <div id="home" class="content active">
       <div id="homeContent">
-
         <div style="text-align:center;">
           <img src="output-onlinetools.png" alt="Catland President"
                style="max-width:200px; border-radius:8px; margin-bottom:10px;">
@@ -193,7 +199,6 @@
       </div>
     </div>
 
-    <!-- EMPTY TABS -->
     <div id="documents" class="content"></div>
     <div id="screenshots" class="content"></div>
     <div id="audio" class="content"></div>
@@ -238,9 +243,12 @@
           : "none";
       });
     }
+
+    function toggleDeptPanel() {
+      const panel = document.getElementById("deptPanel");
+      panel.classList.toggle("open");
+    }
   </script>
 
-</body>
-</html>
 </body>
 </html>
