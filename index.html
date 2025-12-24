@@ -8,6 +8,53 @@
       padding: 0;
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
+      display: flex;
+    }
+
+    /* LEFT SIDEBAR */
+    .sidebar {
+      width: 180px;
+      background-color: #2c2c2c;
+      color: white;
+      height: 100vh;
+      padding-top: 20px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .sidebar-content {
+      width: 90%;
+      height: 80vh;
+      background-color: #3a3a3a;
+      border-radius: 8px;
+      padding: 10px;
+      overflow-y: scroll;
+    }
+
+    .dept-item {
+      padding: 10px;
+      border-bottom: 1px solid #555;
+      font-size: 16px;
+    }
+
+    .dept-item:last-child {
+      border-bottom: none;
+    }
+
+    /* MAIN PAGE AREA */
+    .main {
+      margin-left: 200px;
+      width: calc(100% - 200px);
     }
 
     .header {
@@ -97,47 +144,63 @@
 </head>
 <body>
 
-  <div class="header">Welcome to The Catland Archive</div>
-
-  <div class="description">
-    This archive contains documents, screenshots, audio files, images, and artifacts from the nations of Catland, Dogland, and the continent of Petland.<br>
-    <em>Note: Some entries may be partially redacted.</em>
-  </div>
-
-  <div class="tabs">
-    <div class="tab active" data-tab="home">Home</div>
-    <div class="tab" data-tab="documents">Documents</div>
-    <div class="tab" data-tab="screenshots">Screenshots</div>
-    <div class="tab" data-tab="audio">Audio</div>
-    <div class="tab" data-tab="images">Images</div>
-    <div class="tab" data-tab="artifacts">Artifacts</div>
-  </div>
-
-  <input type="text" id="searchBar" placeholder="Search documents..." style="display:none;">
-
-  <!-- HOME TAB -->
-  <div id="home" class="content active">
-    <div id="homeContent">
-
-      <div style="text-align:center;">
-        <img src="output-onlinetools.png" alt="Catland President"
-             style="max-width:200px; border-radius:8px; margin-bottom:10px;">
-        <div style="font-weight:bold; font-size:20px; margin-bottom:20px;">
-          Catland's current President
-        </div>
-      </div>
-
-      <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
-      <p><em>Note: Some of the things displayed will be redacted.</em></p>
+  <!-- LEFT SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-title">Departments</div>
+    <div class="sidebar-content" id="deptList">
+      <!-- EMPTY — you will add departments later -->
+      <!-- Example format:
+      <div class="dept-item">Department of Catland Security</div>
+      -->
     </div>
   </div>
 
-  <!-- EMPTY TABS (you will add items later) -->
-  <div id="documents" class="content"></div>
-  <div id="screenshots" class="content"></div>
-  <div id="audio" class="content"></div>
-  <div id="images" class="content"></div>
-  <div id="artifacts" class="content"></div>
+  <!-- MAIN PAGE -->
+  <div class="main">
+
+    <div class="header">Welcome to The Catland Archive</div>
+
+    <div class="description">
+      This archive contains documents, screenshots, audio files, images, and artifacts from the nations of Catland, Dogland, and the continent of Petland.<br>
+      <em>Note: Some entries may be partially redacted.</em>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="home">Home</div>
+      <div class="tab" data-tab="documents">Documents</div>
+      <div class="tab" data-tab="screenshots">Screenshots</div>
+      <div class="tab" data-tab="audio">Audio</div>
+      <div class="tab" data-tab="images">Images</div>
+      <div class="tab" data-tab="artifacts">Artifacts</div>
+    </div>
+
+    <input type="text" id="searchBar" placeholder="Search documents..." style="display:none;">
+
+    <!-- HOME TAB -->
+    <div id="home" class="content active">
+      <div id="homeContent">
+
+        <div style="text-align:center;">
+          <img src="output-onlinetools.png" alt="Catland President"
+               style="max-width:200px; border-radius:8px; margin-bottom:10px;">
+          <div style="font-weight:bold; font-size:20px; margin-bottom:20px;">
+            Catland's current President
+          </div>
+        </div>
+
+        <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
+        <p><em>Note: Some of the things displayed will be redacted.</em></p>
+      </div>
+    </div>
+
+    <!-- EMPTY TABS -->
+    <div id="documents" class="content"></div>
+    <div id="screenshots" class="content"></div>
+    <div id="audio" class="content"></div>
+    <div id="images" class="content"></div>
+    <div id="artifacts" class="content"></div>
+
+  </div>
 
   <script>
     const tabs = document.querySelectorAll(".tab");
@@ -177,5 +240,7 @@
     }
   </script>
 
+</body>
+</html>
 </body>
 </html>
