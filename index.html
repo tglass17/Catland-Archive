@@ -174,7 +174,6 @@
       margin-bottom: 10px;
     }
 
-    /* Logo in corner of Extra Info tab */
     .info-logo {
       position: absolute;
       top: 10px;
@@ -197,37 +196,27 @@
       <!-- External Relationships Department -->
       <div class="dept-item" style="text-align:center; border-bottom:none; padding-bottom:20px;">
 
-        <!-- Department Logo -->
-        <img src="bali_indonesia.png" 
-             alt="External Relationships Logo"
-             style="max-width:120px; margin-bottom:10px;">
+        <img src="bali_indonesia.png" style="max-width:120px; margin-bottom:10px;">
 
-        <!-- Department Name -->
         <div style="font-size:20px; font-weight:bold; margin-bottom:8px;">
           External Relationships
         </div>
 
-        <!-- Summary with Read More -->
         <div style="font-size:14px; color:#ccc; line-height:1.4;">
-
-          <!-- Always-visible first sentence -->
           <span>
             The department is involved in Catland’s relations with the world such as its allies: USA, Japan, and France.
           </span>
 
-          <!-- Hidden second sentence -->
           <span id="extMore" style="display:none;">
             The department is also involved in politics and trade requests that are handled by the Foreign Trade department.
           </span>
 
-          <!-- Read more / Read less toggle -->
           <div id="extToggle" 
                style="color:#4da6ff; cursor:pointer; margin-top:6px; font-weight:bold;"
                onclick="toggleExt()">
             Read more
           </div>
 
-          <!-- INFO button -->
           <div class="info-button" onclick="goToInfo()">
             INFO
           </div>
@@ -257,7 +246,6 @@
       <div class="tab" data-tab="images">Images</div>
       <div class="tab" data-tab="artifacts">Artifacts</div>
 
-      <!-- Hidden Extra Info tab -->
       <div class="tab hidden-tab" data-tab="extrainfo" id="extraInfoTab">Extra Info</div>
     </div>
 
@@ -267,8 +255,7 @@
     <div id="home" class="content active">
       <div id="homeContent">
         <div style="text-align:center;">
-          <img src="output-onlinetools.png" alt="Catland President"
-               style="max-width:200px; border-radius:8px; margin-bottom:10px;">
+          <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px; margin-bottom:10px;">
           <div style="font-weight:bold; font-size:20px; margin-bottom:20px;">
             Catland's current President
           </div>
@@ -290,9 +277,22 @@
       <div class="info-line">Previous Head{s}: <b>None</b></div>
     </div>
 
+    <!-- AUDIO TAB -->
+    <div id="audio" class="content">
+
+      <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
+        CATLAND-PRESIDENTIAL-SPEECH_0001
+      </div>
+
+      <audio controls style="width:100%; max-width:500px;">
+        <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+    </div>
+
     <div id="documents" class="content"></div>
     <div id="screenshots" class="content"></div>
-    <div id="audio" class="content"></div>
     <div id="images" class="content"></div>
     <div id="artifacts" class="content"></div>
 
@@ -307,7 +307,6 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
 
-        // If leaving Extra Info tab, hide it again
         if (tab.dataset.tab !== "extrainfo") {
           extraInfoTab.classList.add("hidden-tab");
         }
