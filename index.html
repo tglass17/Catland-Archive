@@ -20,7 +20,7 @@
 
     .description {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 18px;
       color: #444;
       max-width: 700px;
@@ -28,9 +28,29 @@
       margin-right: auto;
     }
 
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 10px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background-color: #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background-color: #333;
+      color: white;
+    }
+
     #searchBar {
       width: 60%;
-      margin: 30px auto 10px auto;
+      margin: 20px auto 10px auto;
       display: block;
       padding: 12px;
       font-size: 16px;
@@ -38,15 +58,20 @@
       border: 1px solid #aaa;
     }
 
-    #container {
+    .content {
       width: 70%;
-      margin: 20px auto;
+      margin: 0 auto 40px auto;
       background: white;
       padding: 20px;
       border-radius: 10px;
       height: 400px;
       overflow-y: scroll;
       box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      display: none;
+    }
+
+    .content.active {
+      display: block;
     }
 
     .item {
@@ -66,28 +91,57 @@
   <div class="header">Welcome to The Catland Archive</div>
 
   <div class="description">
-    This archive contains documents, screenshots, audio, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.<br>
+    This archive contains documents, screenshots, audio files, images, and artifacts from the nations of Catland, Dogland, and the continent of Petland.<br>
     <em>Note: Some entries may be partially redacted.</em>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="documents">Documents</div>
+    <div class="tab" data-tab="screenshots">Screenshots</div>
+    <div class="tab" data-tab="audio">Audio</div>
+    <div class="tab" data-tab="images">Images</div>
+    <div class="tab" data-tab="artifacts">Artifacts</div>
   </div>
 
   <input type="text" id="searchBar" placeholder="Search documents...">
 
-  <div id="container">
-    <!-- EMPTY LIST — you will add items here later -->
-  </div>
+  <div id="documents" class="content active"></div>
+  <div id="screenshots" class="content"></div>
+  <div id="audio" class="content"></div>
+  <div id="images" class="content"></div>
+  <div id="artifacts" class="content"></div>
 
   <script>
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".content");
     const searchBar = document.getElementById("searchBar");
-    const items = document.querySelectorAll(".item");
 
-    searchBar.addEventListener("input", function() {
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        contents.forEach(c => c.classList.remove("active"));
+        document.getElementById(tab.dataset.tab).classList.add("active");
+
+        searchBar.placeholder = "Search " + tab.textContent.toLowerCase() + "...";
+        filterItems();
+      });
+    });
+
+    searchBar.addEventListener("input", filterItems);
+
+    function filterItems() {
+      const activeContent = document.querySelector(".content.active");
+      const items = activeContent.querySelectorAll(".item");
       const text = searchBar.value.toLowerCase();
+
       items.forEach(item => {
         item.style.display = item.textContent.toLowerCase().includes(text)
           ? "block"
           : "none";
       });
-    });
+    }
   </script>
 
 </body>
