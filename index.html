@@ -11,11 +11,27 @@
       transition: margin-left 0.3s ease;
     }
 
-    /* Collapsible Department Tab */
-    .dept-toggle {
+    /* Department Panel + Toggle */
+    .dept-wrapper {
       position: fixed;
-      top: 50%;
+      top: 0;
+      left: -220px;
+      width: 220px;
+      height: 100vh;
+      background-color: #2c2c2c;
+      color: white;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .dept-wrapper.open {
       left: 0;
+    }
+
+    .dept-toggle {
+      position: absolute;
+      top: 50%;
+      right: -40px;
       transform: translateY(-50%);
       background-color: #333;
       color: white;
@@ -26,36 +42,19 @@
       cursor: pointer;
       border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
-      z-index: 1000;
-    }
-
-    .dept-panel {
-      position: fixed;
-      top: 0;
-      left: -220px;
-      width: 200px;
-      height: 100vh;
-      background-color: #2c2c2c;
-      color: white;
-      padding: 20px 10px;
-      overflow-y: auto;
-      transition: left 0.3s ease;
-      z-index: 999;
-    }
-
-    .dept-panel.open {
-      left: 0;
-    }
-
-    body.dept-open {
-      margin-left: 200px;
     }
 
     .dept-title {
       font-size: 18px;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin: 20px 0 10px 0;
       text-align: center;
+    }
+
+    .dept-list {
+      height: 80vh;
+      overflow-y: auto;
+      padding: 0 10px;
     }
 
     .dept-item {
@@ -66,6 +65,10 @@
 
     .dept-item:last-child {
       border-bottom: none;
+    }
+
+    body.dept-open {
+      margin-left: 220px;
     }
 
     .main {
@@ -160,11 +163,11 @@
 </head>
 <body>
 
-  <!-- Collapsible Department Tab -->
-  <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
-  <div class="dept-panel" id="deptPanel">
+  <!-- Departments Panel -->
+  <div class="dept-wrapper" id="deptWrapper">
+    <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
     <div class="dept-title">Departments</div>
-    <div id="deptList">
+    <div class="dept-list" id="deptList">
       <!-- Add departments here -->
       <!-- Example:
       <div class="dept-item">Department of Catland Security</div>
@@ -254,8 +257,8 @@
     }
 
     function toggleDeptPanel() {
-      const panel = document.getElementById("deptPanel");
-      panel.classList.toggle("open");
+      const wrapper = document.getElementById("deptWrapper");
+      wrapper.classList.toggle("open");
       document.body.classList.toggle("dept-open");
     }
   </script>
