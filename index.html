@@ -184,10 +184,26 @@
           External Relationships
         </div>
 
-        <!-- Department Summary -->
+        <!-- Summary with Read More -->
         <div style="font-size:14px; color:#ccc; line-height:1.4;">
-          The department is involved in Catland’s relations with the world such as its allies: USA, Japan, and France. 
-          The department is also involved in politics and trade requests that are handled by the Foreign Trade department.
+
+          <!-- Always-visible first sentence -->
+          <span>
+            The department is involved in Catland’s relations with the world such as its allies: USA, Japan, and France.
+          </span>
+
+          <!-- Hidden second sentence -->
+          <span id="extMore" style="display:none;">
+            The department is also involved in politics and trade requests that are handled by the Foreign Trade department.
+          </span>
+
+          <!-- Read more / Read less toggle -->
+          <div id="extToggle" 
+               style="color:#4da6ff; cursor:pointer; margin-top:6px; font-weight:bold;"
+               onclick="toggleExt()">
+            Read more
+          </div>
+
         </div>
 
       </div>
@@ -280,6 +296,19 @@
       const wrapper = document.getElementById("deptWrapper");
       wrapper.classList.toggle("open");
       document.body.classList.toggle("dept-open");
+    }
+
+    function toggleExt() {
+      const more = document.getElementById("extMore");
+      const toggle = document.getElementById("extToggle");
+
+      if (more.style.display === "none") {
+        more.style.display = "inline";
+        toggle.textContent = "Read less";
+      } else {
+        more.style.display = "none";
+        toggle.textContent = "Read more";
+      }
     }
   </script>
 
