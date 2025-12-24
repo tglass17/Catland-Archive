@@ -141,23 +141,20 @@
       display: block;
     }
 
-    .item {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      font-size: 17px;
-      color: #333;
-    }
-
-    .item:last-child {
-      border-bottom: none;
-    }
-
     #homeContent {
       text-align: center;
       font-size: 18px;
       color: #444;
       padding: 20px;
       line-height: 1.6;
+    }
+
+    .info-button {
+      font-size: 22px;
+      font-weight: bold;
+      color: #4da6ff;
+      cursor: pointer;
+      margin-top: 12px;
     }
   </style>
 </head>
@@ -204,6 +201,11 @@
             Read more
           </div>
 
+          <!-- INFO button -->
+          <div class="info-button" onclick="goToInfo()">
+            INFO
+          </div>
+
         </div>
 
       </div>
@@ -228,10 +230,12 @@
       <div class="tab" data-tab="audio">Audio</div>
       <div class="tab" data-tab="images">Images</div>
       <div class="tab" data-tab="artifacts">Artifacts</div>
+      <div class="tab" data-tab="extrainfo">Extra Info</div>
     </div>
 
     <input type="text" id="searchBar" placeholder="Search documents..." style="display:none;">
 
+    <!-- HOME TAB -->
     <div id="home" class="content active">
       <div id="homeContent">
         <div style="text-align:center;">
@@ -245,6 +249,11 @@
         <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
         <p><em>Note: Some of the things displayed will be redacted.</em></p>
       </div>
+    </div>
+
+    <!-- BLANK EXTRA INFO TAB -->
+    <div id="extrainfo" class="content">
+      <!-- Empty for now -->
     </div>
 
     <div id="documents" class="content"></div>
@@ -268,7 +277,7 @@
         contents.forEach(c => c.classList.remove("active"));
         document.getElementById(tab.dataset.tab).classList.add("active");
 
-        if (tab.dataset.tab === "home") {
+        if (tab.dataset.tab === "home" || tab.dataset.tab === "extrainfo") {
           searchBar.style.display = "none";
         } else {
           searchBar.style.display = "block";
@@ -278,24 +287,8 @@
       });
     });
 
-    searchBar.addEventListener("input", filterItems);
-
-    function filterItems() {
-      const activeContent = document.querySelector(".content.active");
-      const items = activeContent.querySelectorAll(".item");
-      const text = searchBar.value.toLowerCase();
-
-      items.forEach(item => {
-        item.style.display = item.textContent.toLowerCase().includes(text)
-          ? "block"
-          : "none";
-      });
-    }
-
-    function toggleDeptPanel() {
-      const wrapper = document.getElementById("deptWrapper");
-      wrapper.classList.toggle("open");
-      document.body.classList.toggle("dept-open");
+    function goToInfo() {
+      document.querySelector('.tab[data-tab="extrainfo"]').click();
     }
 
     function toggleExt() {
@@ -309,6 +302,24 @@
         more.style.display = "none";
         toggle.textContent = "Read more";
       }
+    }
+
+    function toggleDeptPanel() {
+      const wrapper = document.getElementById("deptWrapper");
+      wrapper.classList.toggle("open");
+      document.body.classList.toggle("dept-open");
+    }
+
+    function filterItems() {
+      const activeContent = document.querySelector(".content.active");
+      const items = activeContent.querySelectorAll(".item");
+      const text = searchBar.value.toLowerCase();
+
+      items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(text)
+          ? "block"
+          : "none";
+      });
     }
   </script>
 
