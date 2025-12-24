@@ -275,6 +275,30 @@
       <div class="info-line">Department Head: <b>James Honay</b></div>
       <div class="info-line">Date Of Creation: <b>1922</b></div>
       <div class="info-line">Previous Head{s}: <b>None</b></div>
+
+      <div style="
+        margin-top:30px;
+        font-size:24px;
+        font-weight:bold;
+        color:#333;
+        font-family:'Fredoka One', sans-serif;
+      ">
+        Transcript
+      </div>
+
+      <div style="
+        margin-top:10px;
+        background:#f0f0f0;
+        padding:15px;
+        border-radius:10px;
+        font-size:18px;
+        line-height:1.5;
+        font-family:Arial, sans-serif;
+        box-shadow:0 0 8px rgba(0,0,0,0.1);
+      ">
+        “As the new president I promise to maintain the beliefs of Catland as a whole.”
+      </div>
+
     </div>
 
     <!-- AUDIO TAB -->
@@ -284,10 +308,22 @@
         CATLAND-PRESIDENTIAL-SPEECH_0001
       </div>
 
-      <audio controls style="width:100%; max-width:500px;">
+      <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
         <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
+
+      <div onclick="goToTranscript()"
+           style="
+             font-family: 'Fredoka One', sans-serif;
+             font-size:20px;
+             font-weight:bold;
+             color:#4da6ff;
+             cursor:pointer;
+             margin-top:10px;
+           ">
+        View Transcript...
+      </div>
 
     </div>
 
@@ -328,6 +364,11 @@
     });
 
     function goToInfo() {
+      extraInfoTab.classList.remove("hidden-tab");
+      extraInfoTab.click();
+    }
+
+    function goToTranscript() {
       extraInfoTab.classList.remove("hidden-tab");
       extraInfoTab.click();
     }
