@@ -33,6 +33,7 @@
       justify-content: center;
       margin-top: 30px;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .tab {
@@ -84,6 +85,14 @@
     .item:last-child {
       border-bottom: none;
     }
+
+    #homeContent {
+      text-align: center;
+      font-size: 18px;
+      color: #444;
+      padding: 20px;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -96,16 +105,24 @@
   </div>
 
   <div class="tabs">
-    <div class="tab active" data-tab="documents">Documents</div>
+    <div class="tab active" data-tab="home">Home</div>
+    <div class="tab" data-tab="documents">Documents</div>
     <div class="tab" data-tab="screenshots">Screenshots</div>
     <div class="tab" data-tab="audio">Audio</div>
     <div class="tab" data-tab="images">Images</div>
     <div class="tab" data-tab="artifacts">Artifacts</div>
   </div>
 
-  <input type="text" id="searchBar" placeholder="Search documents...">
+  <input type="text" id="searchBar" placeholder="Search documents..." style="display:none;">
 
-  <div id="documents" class="content active"></div>
+  <div id="home" class="content active">
+    <div id="homeContent">
+      <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
+      <p><em>Note: Some of the things displayed will be redacted.</em></p>
+    </div>
+  </div>
+
+  <div id="documents" class="content"></div>
   <div id="screenshots" class="content"></div>
   <div id="audio" class="content"></div>
   <div id="images" class="content"></div>
@@ -124,8 +141,13 @@
         contents.forEach(c => c.classList.remove("active"));
         document.getElementById(tab.dataset.tab).classList.add("active");
 
-        searchBar.placeholder = "Search " + tab.textContent.toLowerCase() + "...";
-        filterItems();
+        if (tab.dataset.tab === "home") {
+          searchBar.style.display = "none";
+        } else {
+          searchBar.style.display = "block";
+          searchBar.placeholder = "Search " + tab.textContent.toLowerCase() + "...";
+          filterItems();
+        }
       });
     });
 
