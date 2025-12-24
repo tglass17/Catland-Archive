@@ -7,7 +7,7 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f4f4f4;
     }
 
     .header {
@@ -15,27 +15,80 @@
       margin-top: 40px;
       font-size: 36px;
       font-weight: bold;
-      color: #333;
+      color: #222;
     }
 
     .description {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 18px;
-      color: #555;
-      max-width: 600px;
+      color: #444;
+      max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    #searchBar {
+      width: 60%;
+      margin: 30px auto 10px auto;
+      display: block;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+
+    #container {
+      width: 70%;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      height: 400px;
+      overflow-y: scroll;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+
+    .item {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      font-size: 17px;
+      color: #333;
+    }
+
+    .item:last-child {
+      border-bottom: none;
     }
   </style>
 </head>
 <body>
 
   <div class="header">Welcome to The Catland Archive</div>
+
   <div class="description">
-    This is where we collect audio, screenshots, files, artifacts, and more.<br>
-    <em>Note: some of the things displayed will be redacted.</em>
+    This archive contains documents, screenshots, audio, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.<br>
+    <em>Note: Some entries may be partially redacted.</em>
   </div>
+
+  <input type="text" id="searchBar" placeholder="Search documents...">
+
+  <div id="container">
+    <!-- EMPTY LIST — you will add items here later -->
+  </div>
+
+  <script>
+    const searchBar = document.getElementById("searchBar");
+    const items = document.querySelectorAll(".item");
+
+    searchBar.addEventListener("input", function() {
+      const text = searchBar.value.toLowerCase();
+      items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(text)
+          ? "block"
+          : "none";
+      });
+    });
+  </script>
 
 </body>
 </html>
