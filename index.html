@@ -181,11 +181,12 @@
       opacity:0.9;
     }
 
-    .hidden-section {
-      display: none;
+    .entry {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
     }
 
-    /* SCP-style redaction */
     .redacted {
       background-color: black;
       color: black;
@@ -242,7 +243,7 @@
       <div class="tab hidden-tab" data-tab="extrainfo" id="extraInfoTab">Extra Info</div>
     </div>
 
-    <input type="text" id="searchBar" placeholder="Search documents..." style="display:none;">
+    <input type="text" id="searchBar" placeholder="Search titles..." style="display:none;">
 
     <!-- HOME TAB -->
     <div id="home" class="content active">
@@ -263,7 +264,6 @@
       <div class="info-line">Date Of Creation: <b>1922</b></div>
       <div class="info-line">Previous Head{s}: <b>None</b></div>
 
-      <!-- Transcript block (only appears when triggered) -->
       <div id="extraTranscriptBlock" style="display:none;">
 
         <div style="margin-top:30px; font-size:22px; font-weight:bold;">
@@ -293,58 +293,92 @@
       </div>
     </div>
 
+    <!-- DOCUMENTS TAB -->
+    <div id="documents" class="content">
+      <div class="entry" data-title="DOCUMENT-0001">
+        <div style="font-size:22px; font-weight:bold;">DOCUMENT-0001</div>
+        <p>Placeholder document entry for testing search.</p>
+      </div>
+
+      <div class="entry" data-title="DOCUMENT-TRADE-REPORT_1922">
+        <div style="font-size:22px; font-weight:bold;">DOCUMENT-TRADE-REPORT_1922</div>
+        <p>Example trade report document.</p>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS TAB -->
+    <div id="screenshots" class="content">
+      <div class="entry" data-title="SCREENSHOT-0001">
+        <div style="font-size:22px; font-weight:bold;">SCREENSHOT-0001</div>
+        <p>Example screenshot entry.</p>
+      </div>
+    </div>
+
     <!-- AUDIO TAB -->
     <div id="audio" class="content">
 
-      <!-- FIRST AUDIO ENTRY -->
-      <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
-        CATLAND-PRESIDENTIAL-SPEECH_0001
+      <div class="entry" data-title="CATLAND-PRESIDENTIAL-SPEECH_0001">
+        <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
+          CATLAND-PRESIDENTIAL-SPEECH_0001
+        </div>
+
+        <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
+          <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
+        </audio>
+
+        <div onclick="openTranscriptInExtraInfo()"
+             style="
+               font-family:'Fredoka One', sans-serif;
+               font-size:20px;
+               font-weight:bold;
+               color:#4da6ff;
+               cursor:pointer;
+               margin-top:10px;
+               margin-bottom:40px;
+             ">
+          View Transcript...
+        </div>
       </div>
 
-      <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
-        <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
-      </audio>
+      <div class="entry" data-title="LOCKDOWN-CL_0912">
+        <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
+          LOCKDOWN-CL_0912
+        </div>
 
-      <div onclick="openTranscriptInExtraInfo()"
-           style="
-             font-family:'Fredoka One', sans-serif;
-             font-size:20px;
-             font-weight:bold;
-             color:#4da6ff;
-             cursor:pointer;
-             margin-top:10px;
-             margin-bottom:40px;
-           ">
-        View Transcript...
-      </div>
+        <audio controls style="width:100%; max-width:500px; margin-bottom:10px;">
+          <source src="lockdowncatland.mp3" type="audio/mpeg">
+        </audio>
 
-      <!-- SECOND AUDIO ENTRY (LOCKDOWN-CL_0912) -->
-      <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
-        LOCKDOWN-CL_0912
-      </div>
-
-      <audio controls style="width:100%; max-width:500px; margin-bottom:10px;">
-        <source src="lockdowncatland.mp3" type="audio/mpeg">
-      </audio>
-
-      <div style="
-        background:#f0f0f0;
-        padding:15px;
-        border-radius:10px;
-        font-size:18px;
-        line-height:1.5;
-        font-family:Arial, sans-serif;
-        box-shadow:0 0 8px rgba(0,0,0,0.1);
-      ">
-        On <span class="redacted">████</span>/<span class="redacted">██</span>/<span class="redacted">████</span>, an unscheduled full‑facility lockdown was initiated at the Catland <span class="redacted">████████████</span> division following a containment breach involving anomaly <span class="redacted">███</span>. All personnel were instructed to secure their stations while emergency protocols were enacted to re‑establish control of the affected sectors.
+        <div style="
+          background:#f0f0f0;
+          padding:15px;
+          border-radius:10px;
+          font-size:18px;
+          line-height:1.5;
+          font-family:Arial, sans-serif;
+          box-shadow:0 0 8px rgba(0,0,0,0.1);
+        ">
+          On <span class="redacted">████</span>/<span class="redacted">██</span>/<span class="redacted">████</span>, an unscheduled full‑facility lockdown was initiated at the Catland <span class="redacted">████████████</span> division following a containment breach involving anomaly <span class="redacted">███</span>. All personnel were instructed to secure their stations while emergency protocols were enacted to re‑establish control of the affected sectors.
+        </div>
       </div>
 
     </div>
 
-    <div id="documents" class="content"></div>
-    <div id="screenshots" class="content"></div>
-    <div id="images" class="content"></div>
-    <div id="artifacts" class="content"></div>
+    <!-- IMAGES TAB -->
+    <div id="images" class="content">
+      <div class="entry" data-title="IMAGE-0001">
+        <div style="font-size:22px; font-weight:bold;">IMAGE-0001</div>
+        <p>Example image entry.</p>
+      </div>
+    </div>
+
+    <!-- ARTIFACTS TAB -->
+    <div id="artifacts" class="content">
+      <div class="entry" data-title="ARTIFACT-0001">
+        <div style="font-size:22px; font-weight:bold;">ARTIFACT-0001</div>
+        <p>Example artifact entry.</p>
+      </div>
+    </div>
 
   </div>
 
@@ -373,7 +407,7 @@
           searchBar.style.display = "none";
         } else {
           searchBar.style.display = "block";
-          searchBar.placeholder = "Search " + tab.textContent.toLowerCase();
+          searchBar.placeholder = "Search titles in " + tab.textContent.toLowerCase();
         }
       });
     });
@@ -407,6 +441,25 @@
       wrapper.classList.toggle("open");
       document.body.classList.toggle("dept-open");
     }
+
+    // UNIVERSAL TITLE-ONLY SEARCH
+    searchBar.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const activeTab = document.querySelector(".tab.active").dataset.tab;
+      const container = document.getElementById(activeTab);
+
+      const entries = container.querySelectorAll(".entry");
+
+      entries.forEach(entry => {
+        const title = entry.dataset.title.toLowerCase();
+
+        if (title.includes(query)) {
+          entry.style.display = "";
+        } else {
+          entry.style.display = "none";
+        }
+      });
+    });
   </script>
 
 </body>
