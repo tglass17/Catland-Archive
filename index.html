@@ -185,6 +185,13 @@
     .hidden-section {
       display: none;
     }
+
+    .redacted {
+      background:black;
+      color:black;
+      padding:0 6px;
+      border-radius:3px;
+    }
   </style>
 </head>
 <body>
@@ -320,6 +327,7 @@
     <!-- AUDIO TAB -->
     <div id="audio" class="content">
 
+      <!-- FIRST AUDIO ENTRY -->
       <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
         CATLAND-PRESIDENTIAL-SPEECH_0001
       </div>
@@ -336,8 +344,30 @@
              color:#4da6ff;
              cursor:pointer;
              margin-top:10px;
+             margin-bottom:40px;
            ">
         View Transcript...
+      </div>
+
+      <!-- SECOND AUDIO ENTRY (NEW) -->
+      <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
+        LOCKDOWN-CATLAND_0002
+      </div>
+
+      <audio controls style="width:100%; max-width:500px; margin-bottom:10px;">
+        <source src="lockdowncatland.mp3" type="audio/mpeg">
+      </audio>
+
+      <div style="
+        background:#f0f0f0;
+        padding:15px;
+        border-radius:10px;
+        font-size:18px;
+        line-height:1.5;
+        font-family:Arial, sans-serif;
+        box-shadow:0 0 8px rgba(0,0,0,0.1);
+      ">
+        On <span class="redacted">⬛</span>/<span class="redacted">⬛</span> <span class="redacted">⬛</span>/<span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> a lockdown happened at the Catland <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> team at their facility, and anomaly <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> escaped and they had to go on lockdown.
       </div>
 
     </div>
@@ -410,6 +440,9 @@
       document.body.classList.toggle("dept-open");
     }
   </script>
+
+</body>
+</html>
 
 </body>
 </html>
