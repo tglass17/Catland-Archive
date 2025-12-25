@@ -11,7 +11,6 @@
       transition: margin-left 0.3s ease;
     }
 
-    /* Department Panel + Toggle */
     .dept-wrapper {
       position: fixed;
       top: 0;
@@ -186,11 +185,13 @@
       display: none;
     }
 
+    /* SCP-style redaction */
     .redacted {
-      background:black;
-      color:black;
-      padding:0 6px;
-      border-radius:3px;
+      background-color: black;
+      color: black;
+      padding: 0 4px;
+      border-radius: 2px;
+      font-size: 0.95em;
     }
   </style>
 </head>
@@ -199,43 +200,25 @@
   <!-- Departments Panel -->
   <div class="dept-wrapper" id="deptWrapper">
     <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
-
     <div class="dept-title">Departments</div>
 
     <div class="dept-list" id="deptList">
-
-      <!-- External Relationships Department -->
       <div class="dept-item" style="text-align:center; border-bottom:none; padding-bottom:20px;">
-
         <img src="bali_indonesia.png" style="max-width:120px; margin-bottom:10px;">
-
-        <div style="font-size:20px; font-weight:bold; margin-bottom:8px;">
-          External Relationships
-        </div>
+        <div style="font-size:20px; font-weight:bold; margin-bottom:8px;">External Relationships</div>
 
         <div style="font-size:14px; color:#ccc; line-height:1.4;">
-          <span>
-            The department is involved in Catland’s relations with the world such as its allies: USA, Japan, and France.
-          </span>
+          <span>The department is involved in Catland’s relations with the world such as its allies: USA, Japan, and France.</span>
 
           <span id="extMore" style="display:none;">
             The department is also involved in politics and trade requests that are handled by the Foreign Trade department.
           </span>
 
-          <div id="extToggle" 
-               style="color:#4da6ff; cursor:pointer; margin-top:6px; font-weight:bold;"
-               onclick="toggleExt()">
-            Read more
-          </div>
+          <div id="extToggle" style="color:#4da6ff; cursor:pointer; margin-top:6px; font-weight:bold;" onclick="toggleExt()">Read more</div>
 
-          <div class="info-button" onclick="goToInfo()">
-            INFO
-          </div>
-
+          <div class="info-button" onclick="goToInfo()">INFO</div>
         </div>
-
       </div>
-
     </div>
   </div>
 
@@ -256,7 +239,6 @@
       <div class="tab" data-tab="audio">Audio</div>
       <div class="tab" data-tab="images">Images</div>
       <div class="tab" data-tab="artifacts">Artifacts</div>
-
       <div class="tab hidden-tab" data-tab="extrainfo" id="extraInfoTab">Extra Info</div>
     </div>
 
@@ -265,13 +247,8 @@
     <!-- HOME TAB -->
     <div id="home" class="content active">
       <div id="homeContent">
-        <div style="text-align:center;">
-          <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px; margin-bottom:10px;">
-          <div style="font-weight:bold; font-size:20px; margin-bottom:20px;">
-            Catland's current President
-          </div>
-        </div>
-
+        <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px; margin-bottom:10px;">
+        <div style="font-weight:bold; font-size:20px; margin-bottom:20px;">Catland's current President</div>
         <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
         <p><em>Note: Some of the things displayed will be redacted.</em></p>
       </div>
@@ -282,12 +259,11 @@
       <img src="bali_indonesia.png" class="info-logo">
 
       <div class="big-info">Department Information</div>
-
       <div class="info-line">Department Head: <b>James Honay</b></div>
       <div class="info-line">Date Of Creation: <b>1922</b></div>
       <div class="info-line">Previous Head{s}: <b>None</b></div>
 
-      <!-- AUDIO + TRANSCRIPT (HIDDEN BY DEFAULT) -->
+      <!-- Transcript block (only appears when triggered) -->
       <div id="extraTranscriptBlock" style="display:none;">
 
         <div style="margin-top:30px; font-size:22px; font-weight:bold;">
@@ -298,13 +274,7 @@
           <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
         </audio>
 
-        <div style="
-          font-size:24px;
-          font-weight:bold;
-          color:#333;
-          font-family:'Fredoka One', sans-serif;
-          margin-bottom:10px;
-        ">
+        <div style="font-size:24px; font-weight:bold; margin-bottom:10px;">
           Transcript of CATLAND-PRESIDENTIAL-SPEECH_0001
         </div>
 
@@ -321,7 +291,6 @@
         </div>
 
       </div>
-
     </div>
 
     <!-- AUDIO TAB -->
@@ -338,7 +307,7 @@
 
       <div onclick="openTranscriptInExtraInfo()"
            style="
-             font-family: 'Fredoka One', sans-serif;
+             font-family:'Fredoka One', sans-serif;
              font-size:20px;
              font-weight:bold;
              color:#4da6ff;
@@ -349,9 +318,9 @@
         View Transcript...
       </div>
 
-      <!-- SECOND AUDIO ENTRY (NEW) -->
+      <!-- SECOND AUDIO ENTRY (LOCKDOWN-CL_0912) -->
       <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
-        LOCKDOWN-CATLAND_0002
+        LOCKDOWN-CL_0912
       </div>
 
       <audio controls style="width:100%; max-width:500px; margin-bottom:10px;">
@@ -367,7 +336,7 @@
         font-family:Arial, sans-serif;
         box-shadow:0 0 8px rgba(0,0,0,0.1);
       ">
-        On <span class="redacted">⬛</span>/<span class="redacted">⬛</span> <span class="redacted">⬛</span>/<span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> a lockdown happened at the Catland <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> team at their facility, and anomaly <span class="redacted">⬛</span> <span class="redacted">⬛</span> <span class="redacted">⬛</span> escaped and they had to go on lockdown.
+        On <span class="redacted">████</span>/<span class="redacted">██</span>/<span class="redacted">████</span> a lockdown happened at the Catland <span class="redacted">████████████</span> team at their facility, and anomaly <span class="redacted">███</span> escaped and they had to go on lockdown.
       </div>
 
     </div>
@@ -389,7 +358,6 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
 
-        // Hide transcript/audio when leaving Extra Info
         if (tab.dataset.tab !== "extrainfo") {
           extraTranscriptBlock.style.display = "none";
           extraInfoTab.classList.add("hidden-tab");
@@ -440,9 +408,6 @@
       document.body.classList.toggle("dept-open");
     }
   </script>
-
-</body>
-</html>
 
 </body>
 </html>
