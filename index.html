@@ -181,6 +181,10 @@
       max-width:150px;
       opacity:0.9;
     }
+
+    .hidden-section {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -276,36 +280,39 @@
       <div class="info-line">Date Of Creation: <b>1922</b></div>
       <div class="info-line">Previous Head{s}: <b>None</b></div>
 
-      <!-- AUDIO PLAYER ALSO HERE -->
-      <div style="margin-top:30px; font-size:22px; font-weight:bold;">
-        CATLAND-PRESIDENTIAL-SPEECH_0001
-      </div>
+      <!-- AUDIO + TRANSCRIPT (HIDDEN BY DEFAULT) -->
+      <div id="extraTranscriptBlock" style="display:none;">
 
-      <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
-        <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
-      </audio>
+        <div style="margin-top:30px; font-size:22px; font-weight:bold;">
+          CATLAND-PRESIDENTIAL-SPEECH_0001
+        </div>
 
-      <!-- TRANSCRIPT ALSO HERE -->
-      <div style="
-        font-size:24px;
-        font-weight:bold;
-        color:#333;
-        font-family:'Fredoka One', sans-serif;
-        margin-bottom:10px;
-      ">
-        Transcript of CATLAND-PRESIDENTIAL-SPEECH_0001
-      </div>
+        <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
+          <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
+        </audio>
 
-      <div style="
-        background:#f0f0f0;
-        padding:15px;
-        border-radius:10px;
-        font-size:18px;
-        line-height:1.5;
-        font-family:Arial, sans-serif;
-        box-shadow:0 0 8px rgba(0,0,0,0.1);
-      ">
-        “As the new president I promise to maintain the beliefs of Catland as a whole.”
+        <div style="
+          font-size:24px;
+          font-weight:bold;
+          color:#333;
+          font-family:'Fredoka One', sans-serif;
+          margin-bottom:10px;
+        ">
+          Transcript of CATLAND-PRESIDENTIAL-SPEECH_0001
+        </div>
+
+        <div style="
+          background:#f0f0f0;
+          padding:15px;
+          border-radius:10px;
+          font-size:18px;
+          line-height:1.5;
+          font-family:Arial, sans-serif;
+          box-shadow:0 0 8px rgba(0,0,0,0.1);
+        ">
+          “As the new president I promise to maintain the beliefs of Catland as a whole.”
+        </div>
+
       </div>
 
     </div>
@@ -321,7 +328,7 @@
         <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
       </audio>
 
-      <div onclick="scrollToTranscript()"
+      <div onclick="openTranscriptInExtraInfo()"
            style="
              font-family: 'Fredoka One', sans-serif;
              font-size:20px;
@@ -373,11 +380,14 @@
     const contents = document.querySelectorAll(".content");
     const searchBar = document.getElementById("searchBar");
     const extraInfoTab = document.getElementById("extraInfoTab");
+    const extraTranscriptBlock = document.getElementById("extraTranscriptBlock");
 
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
 
+        // Hide transcript/audio when leaving Extra Info
         if (tab.dataset.tab !== "extrainfo") {
+          extraTranscriptBlock.style.display = "none";
           extraInfoTab.classList.add("hidden-tab");
         }
 
@@ -401,9 +411,10 @@
       extraInfoTab.click();
     }
 
-    function scrollToTranscript() {
-      const section = document.getElementById("transcriptSection");
-      section.scrollIntoView({ behavior: "smooth" });
+    function openTranscriptInExtraInfo() {
+      extraTranscriptBlock.style.display = "block";
+      extraInfoTab.classList.remove("hidden-tab");
+      extraInfoTab.click();
     }
 
     function toggleExt() {
@@ -428,3 +439,4 @@
 
 </body>
 </html>
+
