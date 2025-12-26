@@ -287,7 +287,7 @@
       <div class="tab" data-tab="images">Images</div>
       <div class="tab" data-tab="artifacts">Artifacts</div>
 
-      <!-- ⭐ NEW LOCATIONS TAB -->
+      <!-- ⭐ LOCATIONS TAB -->
       <div class="tab" data-tab="locations">Locations</div>
 
       <div class="tab hidden-tab" data-tab="extrainfo" id="extraInfoTab">Extra Info</div>
@@ -440,7 +440,7 @@
       </div>
     </div>
 
-    <!-- ⭐ NEW LOCATIONS TAB CONTENT (BLANK) -->
+    <!-- ⭐ NEW LOCATIONS TAB CONTENT (SEARCH ENABLED, STILL BLANK) -->
     <div id="locations" class="content">
       <!-- intentionally left blank -->
     </div>
@@ -487,11 +487,10 @@
         contents.forEach(c => c.classList.remove("active"));
         document.getElementById(tab.dataset.tab).classList.add("active");
 
-        /* ⭐ SEARCH BAR BEHAVIOR UPDATED FOR LOCATIONS TAB ⭐ */
+        /* ⭐ SEARCH BAR BEHAVIOR UPDATED — LOCATIONS NOW SHOWS SEARCH ⭐ */
         if (
           tab.dataset.tab === "home" ||
-          tab.dataset.tab === "extrainfo" ||
-          tab.dataset.tab === "locations"
+          tab.dataset.tab === "extrainfo"
         ) {
           searchBar.style.display = "none";
         } else {
