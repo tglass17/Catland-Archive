@@ -395,6 +395,11 @@
         if (tab.dataset.tab !== "extrainfo") {
           extraTranscriptBlock.style.display = "none";
           extraInfoTab.classList.add("hidden-tab");
+
+          // Restore department info when leaving transcript
+          document.querySelector("#extrainfo .big-info").style.display = "block";
+          document.querySelectorAll("#extrainfo .info-line").forEach(x => x.style.display = "block");
+          document.querySelector(".info-logo").style.display = "block";
         }
 
         tabs.forEach(t => t.classList.remove("active"));
@@ -413,12 +418,27 @@
     });
 
     function goToInfo() {
+      // Show department info
+      document.querySelector("#extrainfo .big-info").style.display = "block";
+      document.querySelectorAll("#extrainfo .info-line").forEach(x => x.style.display = "block");
+      document.querySelector(".info-logo").style.display = "block";
+
+      // Hide transcript
+      extraTranscriptBlock.style.display = "none";
+
       extraInfoTab.classList.remove("hidden-tab");
       extraInfoTab.click();
     }
 
     function openTranscriptInExtraInfo() {
+      // Hide department info
+      document.querySelector("#extrainfo .big-info").style.display = "none";
+      document.querySelectorAll("#extrainfo .info-line").forEach(x => x.style.display = "none");
+      document.querySelector(".info-logo").style.display = "none";
+
+      // Show transcript
       extraTranscriptBlock.style.display = "block";
+
       extraInfoTab.classList.remove("hidden-tab");
       extraInfoTab.click();
     }
