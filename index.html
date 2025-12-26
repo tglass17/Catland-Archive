@@ -275,7 +275,7 @@
     <div class="header">Welcome to The Catland Archive</div>
 
     <div class="description">
-      This archive contains documents, screenshots, audio files, images, and artifacts from the nations of Catland, Dogland, and the continent of Petland.<br>
+      This archive contains documents, screenshots, audio files, images, artifacts, and locations from the nations of Catland, Dogland, and the continent of Petland.<br>
       <em>Note: Some entries may be partially redacted.</em>
     </div>
 
@@ -286,6 +286,10 @@
       <div class="tab" data-tab="audio">Audio</div>
       <div class="tab" data-tab="images">Images</div>
       <div class="tab" data-tab="artifacts">Artifacts</div>
+
+      <!-- ⭐ NEW LOCATIONS TAB -->
+      <div class="tab" data-tab="locations">Locations</div>
+
       <div class="tab hidden-tab" data-tab="extrainfo" id="extraInfoTab">Extra Info</div>
     </div>
 
@@ -436,6 +440,11 @@
       </div>
     </div>
 
+    <!-- ⭐ NEW LOCATIONS TAB CONTENT (BLANK) -->
+    <div id="locations" class="content">
+      <!-- intentionally left blank -->
+    </div>
+
   </div>
 
   <!-- MODAL OVERLAY FOR DOCUMENT PNG -->
@@ -478,7 +487,12 @@
         contents.forEach(c => c.classList.remove("active"));
         document.getElementById(tab.dataset.tab).classList.add("active");
 
-        if (tab.dataset.tab === "home" || tab.dataset.tab === "extrainfo") {
+        /* ⭐ SEARCH BAR BEHAVIOR UPDATED FOR LOCATIONS TAB ⭐ */
+        if (
+          tab.dataset.tab === "home" ||
+          tab.dataset.tab === "extrainfo" ||
+          tab.dataset.tab === "locations"
+        ) {
           searchBar.style.display = "none";
         } else {
           searchBar.style.display = "block";
