@@ -195,14 +195,14 @@
       font-size: 0.95em;
     }
 
-    /* Modal for document PNG */
+    /* MODAL FOR DOCUMENT PNG */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,1);
       display: none;
       align-items: center;
       justify-content: center;
@@ -215,13 +215,16 @@
       padding: 10px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      max-width: 90%;
+      width: 1200px;
+      max-width: 95%;
       max-height: 90%;
+      overflow: auto;
     }
 
     .modal-content img {
+      width: 1200px;
+      height: auto;
       max-width: 100%;
-      max-height: 80vh;
       border-radius: 8px;
       display: block;
     }
@@ -231,15 +234,17 @@
       top: 8px;
       right: 12px;
       color: #fff;
-      font-size: 22px;
+      font-size: 28px;
       font-weight: bold;
       cursor: pointer;
+      z-index: 3000;
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Departments Panel -->
+  <!-- DEPARTMENTS PANEL -->
   <div class="dept-wrapper" id="deptWrapper">
     <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
     <div class="dept-title">Departments</div>
@@ -264,7 +269,7 @@
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- MAIN CONTENT -->
   <div class="main">
 
     <div class="header">Welcome to The Catland Archive</div>
@@ -336,7 +341,6 @@
 
     <!-- DOCUMENTS TAB -->
     <div id="documents" class="content">
-      <!-- NEW DOCUMENT ENTRY WITH MODAL -->
       <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
         <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
         <div
@@ -398,8 +402,7 @@
           View Transcript...
         </div>
       </div>
-
-      <div class="entry" data-title="LOCKDOWN-CL_0912">
+            <div class="entry" data-title="LOCKDOWN-CL_0912">
         <div style="font-size:22px; font-weight:bold; margin-bottom:10px;">
           LOCKDOWN-CL_0912
         </div>
@@ -464,7 +467,6 @@
           extraTranscriptBlock.style.display = "none";
           extraInfoTab.classList.add("hidden-tab");
 
-          // Restore department info when leaving transcript
           document.querySelector("#extrainfo .big-info").style.display = "block";
           document.querySelectorAll("#extrainfo .info-line").forEach(x => x.style.display = "block");
           document.querySelector(".info-logo").style.display = "block";
@@ -486,12 +488,10 @@
     });
 
     function goToInfo() {
-      // Show department info
       document.querySelector("#extrainfo .big-info").style.display = "block";
       document.querySelectorAll("#extrainfo .info-line").forEach(x => x.style.display = "block");
       document.querySelector(".info-logo").style.display = "block";
 
-      // Hide transcript
       extraTranscriptBlock.style.display = "none";
 
       extraInfoTab.classList.remove("hidden-tab");
@@ -499,12 +499,10 @@
     }
 
     function openTranscriptInExtraInfo() {
-      // Hide department info
       document.querySelector("#extrainfo .big-info").style.display = "none";
       document.querySelectorAll("#extrainfo .info-line").forEach(x => x.style.display = "none");
       document.querySelector(".info-logo").style.display = "none";
 
-      // Show transcript
       extraTranscriptBlock.style.display = "block";
 
       extraInfoTab.classList.remove("hidden-tab");
@@ -530,7 +528,6 @@
       document.body.classList.toggle("dept-open");
     }
 
-    // Modal controls for document PNG
     function openDocumentModal() {
       docModal.style.display = "flex";
     }
@@ -539,14 +536,12 @@
       docModal.style.display = "none";
     }
 
-    // Close modal if clicking outside content
     docModal.addEventListener("click", function (e) {
       if (e.target === docModal) {
         closeDocumentModal();
       }
     });
 
-    // UNIVERSAL TITLE-ONLY SEARCH
     searchBar.addEventListener("input", function () {
       const query = this.value.toLowerCase();
       const activeTab = document.querySelector(".tab.active").dataset.tab;
