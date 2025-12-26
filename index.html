@@ -194,6 +194,47 @@
       border-radius: 2px;
       font-size: 0.95em;
     }
+
+    /* Modal for document PNG */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      position: relative;
+      background: #111;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      color: #fff;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -295,6 +336,24 @@
 
     <!-- DOCUMENTS TAB -->
     <div id="documents" class="content">
+      <!-- NEW DOCUMENT ENTRY WITH MODAL -->
+      <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
+        <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
+        <div
+          onclick="openDocumentModal()"
+          style="
+            font-family:'Fredoka One', sans-serif;
+            font-size:18px;
+            font-weight:bold;
+            color:#4da6ff;
+            cursor:pointer;
+            margin-top:8px;
+          "
+        >
+          View Document
+        </div>
+      </div>
+
       <div class="entry" data-title="DOCUMENT-0001">
         <div style="font-size:22px; font-weight:bold;">DOCUMENT-0001</div>
         <p>Placeholder document entry for testing search.</p>
@@ -382,12 +441,21 @@
 
   </div>
 
+  <!-- MODAL OVERLAY FOR DOCUMENT PNG -->
+  <div id="docModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeDocumentModal()">X</div>
+      <img src="Catland Archive - Moderation - Copy_Redacted.png" alt="CROSS-DEPARTMENT_REPORT1088">
+    </div>
+  </div>
+
   <script>
     const tabs = document.querySelectorAll(".tab");
     const contents = document.querySelectorAll(".content");
     const searchBar = document.getElementById("searchBar");
     const extraInfoTab = document.getElementById("extraInfoTab");
     const extraTranscriptBlock = document.getElementById("extraTranscriptBlock");
+    const docModal = document.getElementById("docModal");
 
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
@@ -461,6 +529,22 @@
       wrapper.classList.toggle("open");
       document.body.classList.toggle("dept-open");
     }
+
+    // Modal controls for document PNG
+    function openDocumentModal() {
+      docModal.style.display = "flex";
+    }
+
+    function closeDocumentModal() {
+      docModal.style.display = "none";
+    }
+
+    // Close modal if clicking outside content
+    docModal.addEventListener("click", function (e) {
+      if (e.target === docModal) {
+        closeDocumentModal();
+      }
+    });
 
     // UNIVERSAL TITLE-ONLY SEARCH
     searchBar.addEventListener("input", function () {
