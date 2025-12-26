@@ -457,6 +457,12 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
 
+        /* ⭐ STOP ALL AUDIO WHEN SWITCHING TABS ⭐ */
+        document.querySelectorAll("audio").forEach(a => {
+          a.pause();
+          a.currentTime = 0;
+        });
+
         if (tab.dataset.tab !== "extrainfo") {
           extraTranscriptBlock.style.display = "none";
           extraInfoTab.classList.add("hidden-tab");
