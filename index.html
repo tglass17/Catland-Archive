@@ -286,10 +286,7 @@
       <div class="tab" data-tab="audio">Audio</div>
       <div class="tab" data-tab="images">Images</div>
       <div class="tab" data-tab="artifacts">Artifacts</div>
-
-      <!-- ⭐ LOCATIONS TAB -->
       <div class="tab" data-tab="locations">Locations</div>
-
       <div class="tab hidden-tab" data-tab="extrainfo" id="extraInfoTab">Extra Info</div>
     </div>
 
@@ -346,11 +343,29 @@
     <!-- DOCUMENTS TAB -->
     <div id="documents" class="content">
 
-      <!-- ONLY YOUR REAL DOCUMENT ENTRY -->
+      <!-- DOCUMENT 1 -->
       <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
         <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
         <div
           onclick="openDocumentModal()"
+          style="
+            font-family:'Fredoka One', sans-serif;
+            font-size:18px;
+            font-weight:bold;
+            color:#4da6ff;
+            cursor:pointer;
+            margin-top:8px;
+          "
+        >
+          View Document
+        </div>
+      </div>
+
+      <!-- ⭐ DOCUMENT 2 — NEW ONE YOU ADDED -->
+      <div class="entry" data-title="EXTERNAL RELATIONS- REPORT_ 2893">
+        <div style="font-size:22px; font-weight:bold;">EXTERNAL RELATIONS- REPORT_ 2893</div>
+        <div
+          onclick="openDocumentModal2()"
           style="
             font-family:'Fredoka One', sans-serif;
             font-size:18px;
@@ -440,18 +455,26 @@
       </div>
     </div>
 
-    <!-- ⭐ NEW LOCATIONS TAB CONTENT (SEARCH ENABLED, STILL BLANK) -->
+    <!-- LOCATIONS TAB -->
     <div id="locations" class="content">
       <!-- intentionally left blank -->
     </div>
 
   </div>
 
-  <!-- MODAL OVERLAY FOR DOCUMENT PNG -->
+  <!-- MODAL 1 — CROSS-DEPARTMENT_REPORT1088 -->
   <div id="docModal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-close" onclick="closeDocumentModal()">X</div>
       <img src="Catland Archive - Moderation - Copy_Redacted.png" alt="CROSS-DEPARTMENT_REPORT1088">
+    </div>
+  </div>
+
+  <!-- ⭐ MODAL 2 — EXTERNAL RELATIONS REPORT 2893 -->
+  <div id="docModal2" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeDocumentModal2()">X</div>
+      <img src="EXTERNAL RELATIONS REPORT 2893_Redacted.png" alt="EXTERNAL RELATIONS- REPORT_ 2893">
     </div>
   </div>
 
@@ -461,7 +484,9 @@
     const searchBar = document.getElementById("searchBar");
     const extraInfoTab = document.getElementById("extraInfoTab");
     const extraTranscriptBlock = document.getElementById("extraTranscriptBlock");
+
     const docModal = document.getElementById("docModal");
+    const docModal2 = document.getElementById("docModal2");
 
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
@@ -487,7 +512,7 @@
         contents.forEach(c => c.classList.remove("active"));
         document.getElementById(tab.dataset.tab).classList.add("active");
 
-        /* ⭐ SEARCH BAR BEHAVIOR UPDATED — LOCATIONS NOW SHOWS SEARCH ⭐ */
+        /* SEARCH BAR BEHAVIOR */
         if (
           tab.dataset.tab === "home" ||
           tab.dataset.tab === "extrainfo"
@@ -541,20 +566,31 @@
       document.body.classList.toggle("dept-open");
     }
 
+    /* ⭐ OPEN/CLOSE MODAL 1 */
     function openDocumentModal() {
       docModal.style.display = "flex";
     }
-
     function closeDocumentModal() {
       docModal.style.display = "none";
     }
 
+    /* ⭐ OPEN/CLOSE MODAL 2 */
+    function openDocumentModal2() {
+      docModal2.style.display = "flex";
+    }
+    function closeDocumentModal2() {
+      docModal2.style.display = "none";
+    }
+
+    /* CLICK OUTSIDE TO CLOSE */
     docModal.addEventListener("click", function (e) {
-      if (e.target === docModal) {
-        closeDocumentModal();
-      }
+      if (e.target === docModal) closeDocumentModal();
+    });
+    docModal2.addEventListener("click", function (e) {
+      if (e.target === docModal2) closeDocumentModal2();
     });
 
+    /* SEARCH */
     searchBar.addEventListener("input", function () {
       const query = this.value.toLowerCase();
       const activeTab = document.querySelector(".tab.active").dataset.tab;
