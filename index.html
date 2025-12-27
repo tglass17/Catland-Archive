@@ -195,7 +195,7 @@
       font-size: 0.95em;
     }
 
-    /* MODAL FOR DOCUMENT PNG */
+    /* MODAL BASE STYLE */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -343,7 +343,7 @@
     <!-- DOCUMENTS TAB -->
     <div id="documents" class="content">
 
-      <!-- DOCUMENT 1 -->
+      <!-- DOCUMENT 1 (UPDATED IMAGE) -->
       <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
         <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
         <div
@@ -361,7 +361,7 @@
         </div>
       </div>
 
-      <!-- ⭐ DOCUMENT 2 — NEW ONE YOU ADDED -->
+      <!-- DOCUMENT 2 -->
       <div class="entry" data-title="EXTERNAL RELATIONS- REPORT_ 2893">
         <div style="font-size:22px; font-weight:bold;">EXTERNAL RELATIONS- REPORT_ 2893</div>
         <div
@@ -462,15 +462,15 @@
 
   </div>
 
-  <!-- MODAL 1 — CROSS-DEPARTMENT_REPORT1088 -->
+  <!-- ⭐ MODAL 1 — UPDATED IMAGE -->
   <div id="docModal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-close" onclick="closeDocumentModal()">X</div>
-      <img src="Catland Archive - Moderation - Copy_Redacted.png" alt="CROSS-DEPARTMENT_REPORT1088">
+      <img src="CROSS-DEPARTMENT_REPORT1088_Redacted.png" alt="CROSS-DEPARTMENT_REPORT1088">
     </div>
   </div>
 
-  <!-- ⭐ MODAL 2 — EXTERNAL RELATIONS REPORT 2893 -->
+  <!-- MODAL 2 — EXTERNAL RELATIONS REPORT -->
   <div id="docModal2" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-close" onclick="closeDocumentModal2()">X</div>
@@ -491,7 +491,7 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
 
-        /* ⭐ STOP ALL AUDIO WHEN SWITCHING TABS ⭐ */
+        /* STOP ALL AUDIO WHEN SWITCHING TABS */
         document.querySelectorAll("audio").forEach(a => {
           a.pause();
           a.currentTime = 0;
@@ -512,7 +512,6 @@
         contents.forEach(c => c.classList.remove("active"));
         document.getElementById(tab.dataset.tab).classList.add("active");
 
-        /* SEARCH BAR BEHAVIOR */
         if (
           tab.dataset.tab === "home" ||
           tab.dataset.tab === "extrainfo"
@@ -566,7 +565,7 @@
       document.body.classList.toggle("dept-open");
     }
 
-    /* ⭐ OPEN/CLOSE MODAL 1 */
+    /* MODAL 1 */
     function openDocumentModal() {
       docModal.style.display = "flex";
     }
@@ -574,7 +573,7 @@
       docModal.style.display = "none";
     }
 
-    /* ⭐ OPEN/CLOSE MODAL 2 */
+    /* MODAL 2 */
     function openDocumentModal2() {
       docModal2.style.display = "flex";
     }
@@ -582,7 +581,6 @@
       docModal2.style.display = "none";
     }
 
-    /* CLICK OUTSIDE TO CLOSE */
     docModal.addEventListener("click", function (e) {
       if (e.target === docModal) closeDocumentModal();
     });
