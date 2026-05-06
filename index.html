@@ -195,7 +195,7 @@
       font-size: 0.95em;
     }
 
-    /* MODAL BASE STYLE */
+    /* MODAL FOR DOCUMENT PNG */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -343,7 +343,47 @@
     <!-- DOCUMENTS TAB -->
     <div id="documents" class="content">
 
-      <!-- DOCUMENT 1 (UPDATED IMAGE) -->
+      <!-- DOCUMENT 1 -->
+      <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
+        <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
+        <div
+          onclick="openDocumentModal()"
+          style="
+            font-family:'Fredoka One', sans-serif;
+            font-size:18px;
+            font-weight:bold;
+            color:#4da6ff;
+            cursor:pointer;
+            margin-top:8px;
+          "
+        >
+          View Document
+        </div>
+      </div>
+
+      <!-- ⭐ DOCUMENT 2 — NEW ONE YOU ADDED -->
+      <div class="entry" data-title="EXTERNAL RELATIONS- REPORT_ 2893">
+        <div style="font-size:22px; font-weight:bold;">EXTERNAL RELATIONS- REPORT_ 2893</div>
+        <div
+          onclick="openDocumentModal2()"
+          style="
+            font-family:'Fredoka One', sans-serif;
+            font-size:18px;
+            font-weight:bold;
+            color:#4da6ff;
+            cursor:pointer;
+            margin-top:8px;
+          "
+        >
+          View Document
+        </div>
+      </div>
+          </div>
+
+    <!-- DOCUMENTS TAB -->
+    <div id="documents" class="content">
+
+      <!-- DOCUMENT 1 -->
       <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
         <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
         <div
@@ -378,7 +418,7 @@
           View Document
         </div>
       </div>
-            </div>
+
     </div>
 
     <!-- SCREENSHOTS TAB -->
@@ -462,7 +502,7 @@
 
   </div>
 
-  <!-- ⭐ MODAL 1 — UPDATED IMAGE -->
+  <!-- MODAL 1 — CROSS-DEPARTMENT_REPORT1088 -->
   <div id="docModal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-close" onclick="closeDocumentModal()">X</div>
@@ -491,7 +531,6 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
 
-        /* STOP ALL AUDIO WHEN SWITCHING TABS */
         document.querySelectorAll("audio").forEach(a => {
           a.pause();
           a.currentTime = 0;
@@ -565,7 +604,6 @@
       document.body.classList.toggle("dept-open");
     }
 
-    /* MODAL 1 */
     function openDocumentModal() {
       docModal.style.display = "flex";
     }
@@ -573,7 +611,6 @@
       docModal.style.display = "none";
     }
 
-    /* MODAL 2 */
     function openDocumentModal2() {
       docModal2.style.display = "flex";
     }
@@ -588,7 +625,6 @@
       if (e.target === docModal2) closeDocumentModal2();
     });
 
-    /* SEARCH */
     searchBar.addEventListener("input", function () {
       const query = this.value.toLowerCase();
       const activeTab = document.querySelector(".tab.active").dataset.tab;
