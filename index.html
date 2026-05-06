@@ -292,15 +292,32 @@
 
     <input type="text" id="searchBar" placeholder="Search titles..." style="display:none;">
 
-    <!-- HOME TAB -->
-    <div id="home" class="content active">
-      <div id="homeContent">
-        <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px; margin-bottom:10px;">
-        <div style="font-weight:bold; font-size:20px; margin-bottom:20px;">Catland's current President</div>
-        <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
-        <p><em>Note: Some of the things displayed will be redacted.</em></p>
-      </div>
+ <!-- ⭐ HOME TAB -->
+<div id="home" class="content active">
+
+  <div class="home-image-row">
+
+    <!-- PRESIDENT IMAGE -->
+    <div style="text-align:center;">
+      <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px;">
+      <div class="home-label">Catland's current President</div>
     </div>
+
+   /* ⭐ FLAG HOVER ANIMATION — GUARANTEED WORKING */
+.flag-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.flag-hover:hover {
+  transform: scale(1.10);
+  box-shadow: 0 0 15px rgba(0,0,0,0.25);
+}
+  </div>
+
+  <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
+  <p><em>Note: Some of the things displayed will be redacted.</em></p>
+
+</div>
 
     <!-- EXTRA INFO TAB -->
     <div id="extrainfo" class="content">
