@@ -145,12 +145,32 @@
       display: block;
     }
 
-    #homeContent {
-      text-align: center;
+    /* ⭐ HOME PAGE IMAGE ROW */
+    .home-image-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* ⭐ FLAG HOVER ANIMATION */
+    .flag-hover {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .flag-hover:hover {
+      transform: scale(1.10);
+      box-shadow: 0 0 15px rgba(0,0,0,0.25);
+    }
+
+    .home-label {
       font-size: 18px;
-      color: #444;
-      padding: 20px;
-      line-height: 1.6;
+      font-weight: bold;
+      margin-top: 8px;
+      text-align: center;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #333;
     }
 
     .info-button {
@@ -195,7 +215,7 @@
       font-size: 0.95em;
     }
 
-    /* MODAL FOR DOCUMENT PNG */
+    /* MODAL BASE STYLE */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -292,110 +312,30 @@
 
     <input type="text" id="searchBar" placeholder="Search titles..." style="display:none;">
 
- <!-- ⭐ HOME TAB -->
-<div id="home" class="content active">
+    <!-- ⭐ HOME TAB -->
+    <div id="home" class="content active">
 
-  <div class="home-image-row">
+      <div class="home-image-row">
 
-    <!-- PRESIDENT IMAGE -->
-    <div style="text-align:center;">
-      <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px;">
-      <div class="home-label">Catland's current President</div>
+        <!-- PRESIDENT IMAGE -->
+        <div style="text-align:center;">
+          <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px;">
+          <div class="home-label">Catland's current President</div>
+        </div>
+
+        <!-- ⭐ FLAG IMAGE -->
+        <div style="text-align:center;">
+          <img src="catland.flag.png" class="flag-hover" style="max-width:200px; border-radius:8px;">
+          <div class="home-label">Catland's National Flag</div>
+        </div>
+
+      </div>
+
+      <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
+      <p><em>Note: Some of the things displayed will be redacted.</em></p>
+
     </div>
-
-   /* ⭐ FLAG HOVER ANIMATION — GUARANTEED WORKING */
-.flag-hover {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.flag-hover:hover {
-  transform: scale(1.10);
-  box-shadow: 0 0 15px rgba(0,0,0,0.25);
-}
-  </div>
-
-  <p>This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.</p>
-  <p><em>Note: Some of the things displayed will be redacted.</em></p>
-
-</div>
-
-    <!-- EXTRA INFO TAB -->
-    <div id="extrainfo" class="content">
-      <img src="bali_indonesia.png" class="info-logo">
-
-      <div class="big-info">Department Information</div>
-      <div class="info-line">Department Head: <b>James Honay</b></div>
-      <div class="info-line">Date Of Creation: <b>1922</b></div>
-      <div class="info-line">Previous Head{s}: <b>None</b></div>
-
-      <div id="extraTranscriptBlock" style="display:none;">
-
-        <div style="margin-top:30px; font-size:22px; font-weight:bold;">
-          CATLAND-PRESIDENTIAL-SPEECH_0001
         </div>
-
-        <audio controls style="width:100%; max-width:500px; margin-bottom:15px;">
-          <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
-        </audio>
-
-        <div style="font-size:24px; font-weight:bold; margin-bottom:10px;">
-          Transcript of CATLAND-PRESIDENTIAL-SPEECH_0001
-        </div>
-
-        <div style="
-          background:#f0f0f0;
-          padding:15px;
-          border-radius:10px;
-          font-size:18px;
-          line-height:1.5;
-          font-family:Arial, sans-serif;
-          box-shadow:0 0 8px rgba(0,0,0,0.1);
-        ">
-          “As the new president I promise to maintain the beliefs of Catland as a whole, to honor our past, safeguard our present, and shape a future we can all be proud of.”
-        </div>
-
-      </div>
-    </div>
-
-    <!-- DOCUMENTS TAB -->
-    <div id="documents" class="content">
-
-      <!-- DOCUMENT 1 -->
-      <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
-        <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
-        <div
-          onclick="openDocumentModal()"
-          style="
-            font-family:'Fredoka One', sans-serif;
-            font-size:18px;
-            font-weight:bold;
-            color:#4da6ff;
-            cursor:pointer;
-            margin-top:8px;
-          "
-        >
-          View Document
-        </div>
-      </div>
-
-      <!-- ⭐ DOCUMENT 2 — NEW ONE YOU ADDED -->
-      <div class="entry" data-title="EXTERNAL RELATIONS- REPORT_ 2893">
-        <div style="font-size:22px; font-weight:bold;">EXTERNAL RELATIONS- REPORT_ 2893</div>
-        <div
-          onclick="openDocumentModal2()"
-          style="
-            font-family:'Fredoka One', sans-serif;
-            font-size:18px;
-            font-weight:bold;
-            color:#4da6ff;
-            cursor:pointer;
-            margin-top:8px;
-          "
-        >
-          View Document
-        </div>
-      </div>
-          </div>
 
     <!-- DOCUMENTS TAB -->
     <div id="documents" class="content">
