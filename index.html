@@ -394,57 +394,60 @@
       </div>
 
     </div>
-        </div>
+        </div> <!-- END HOME TAB -->
 
-    <!-- EXTRA INFO TAB -->
-    <div id="extrainfo" class="content">
-      <div class="big-info">Extra Information</div>
-      <div class="info-line">This section contains additional data and notes.</div>
-      <img src="bali_indonesia.png" class="info-logo">
-      <div id="extraTranscriptBlock" style="display:none; font-size:18px; line-height:1.5;">
-        Transcript loading...
+    <!-- OTHER TABS -->
+    <div id="documents" class="content">
+      <div class="entry" data-title="DOC1">
+        <div style="font-size:22px;font-weight:bold;">Example Document</div>
       </div>
     </div>
 
-    <!-- MINI GAME OVERLAY -->
-    <div id="catlandGameOverlay">
-      <div id="catlandGameInner">
+    <div id="screenshots" class="content"></div>
+    <div id="audio" class="content"></div>
+    <div id="images" class="content"></div>
+    <div id="artifacts" class="content"></div>
+    <div id="locations" class="content"></div>
 
-        <div id="gamePrompt">PRESS SPACE TO BEGIN!</div>
-
-        <!-- Pixel Cat -->
-        <div id="gameCat"></div>
-
-        <!-- Target Image -->
-        <img id="gameTarget" src="Screenshot 2026-05-08 203604.png">
-
-        <div id="gameAttackHint">PRESS F TO ATTACK</div>
-
-        <!-- End Message -->
-        <div id="gameEndMessageBox">
-          <div id="gameEndText"></div>
-          <div id="gameEndPrompt" style="display:none;">PRESS ENTER TO EXIT</div>
-        </div>
-
-      </div>
+    <div id="extrainfo" class="content">
+      <div class="big-info">Extra Information</div>
+      <div id="extraTranscriptBlock" style="display:none;"></div>
     </div>
 
   </div> <!-- END MAIN -->
 
-  <!-- DOCUMENT MODALS -->
-  <div id="docModal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-close" onclick="closeDocumentModal()">X</div>
-      <img src="CROSS-DEPARTMENT_REPORT1088_Redacted.png">
-    </div>
-  </div>
 
-  <div id="docModal2" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-close" onclick="closeDocumentModal2()">X</div>
-      <img src="EXTERNAL RELATIONS REPORT 2893_Redacted.png">
+<!-- ⭐ FULLSCREEN MINI‑GAME OVERLAY (NOW OUTSIDE .main AND WORKING) -->
+<div id="catlandGameOverlay" style="position:fixed; inset:0; background:#021b0b; display:none; z-index:9999; font-family:'Courier New', monospace; color:white;">
+  <div id="catlandGameInner" style="position:relative; width:100%; height:100%; overflow:hidden; image-rendering:pixelated;">
+
+    <div id="gamePrompt" style="position:absolute; top:20px; width:100%; text-align:center; font-size:28px;">
+      PRESS SPACE TO BEGIN!
     </div>
+
+    <div id="gameCat"></div>
+
+    <img id="gameTarget" src="Screenshot 2026-05-08 203604.png"
+         style="position:absolute; width:220px; left:50%; top:50%; transform:translate(-50%, -50%); image-rendering:pixelated;">
+
+    <div id="gameAttackHint"
+         style="position:absolute; bottom:40px; width:100%; text-align:center; font-size:20px; display:none;">
+      PRESS F TO ATTACK
+    </div>
+
+    <div id="gameEndMessageBox"
+         style="position:absolute; width:80%; max-width:700px; background:#041f10; border:2px solid #3cff8a;
+                padding:20px; border-radius:8px; top:50%; left:50%; transform:translate(-50%, -50%);
+                display:none; box-shadow:0 0 18px rgba(0,0,0,0.7);">
+      <div id="gameEndText" style="font-size:20px; white-space:pre-line;"></div>
+      <div id="gameEndPrompt" style="margin-top:15px; font-size:16px; text-align:right; opacity:0.8; display:none;">
+        PRESS ENTER TO EXIT
+      </div>
+    </div>
+
   </div>
+</div>
+
 
 <script>
 /* ---------------- TAB LOGIC ---------------- */
@@ -473,14 +476,13 @@ tabs.forEach(tab => {
     contents.forEach(c => c.classList.remove("active"));
     document.getElementById(tab.dataset.tab).classList.add("active");
 
-    if (tab.dataset.tab === "home" || tab.dataset.tab === "extrainfo") {
-      searchBar.style.display = "none";
-    } else {
-      searchBar.style.display = "block";
-      searchBar.placeholder = "Search titles in " + tab.textContent.toLowerCase();
-    }
+    searchBar.style.display =
+      (tab.dataset.tab === "home" || tab.dataset.tab === "extrainfo")
+      ? "none"
+      : "block";
   });
 });
+
 
 /* ---------------- MINI GAME ---------------- */
 const gameOverlay = document.getElementById("catlandGameOverlay");
@@ -502,9 +504,12 @@ let speed = 4;
 
 let keys = {};
 
-/* Pixel Cat (64×64) */
+/* Pixel Cat */
 gameCat.style.width = "64px";
 gameCat.style.height = "64px";
+gameCat.style.position = "absolute";
+gameCat.style.left = catX + "px";
+gameCat.style.top = catY + "px";
 gameCat.style.imageRendering = "pixelated";
 gameCat.style.background = `
   linear-gradient(#000,#000) 8px 0 / 48px 8px no-repeat,
@@ -515,9 +520,6 @@ gameCat.style.background = `
   linear-gradient(#000,#000) 20px 20px / 8px 8px no-repeat,
   linear-gradient(#000,#000) 36px 20px / 8px 8px no-repeat
 `;
-gameCat.style.position = "absolute";
-gameCat.style.left = catX + "px";
-gameCat.style.top = catY + "px";
 
 /* Start Game */
 document.getElementById("startCatlandGame").onclick = () => {
@@ -531,11 +533,11 @@ document.addEventListener("keydown", e => {
 
   if (!gameStarted && e.code === "Space") {
     gameStarted = true;
-    gamePrompt.style.display = "none";   // FIXED
+    gamePrompt.style.display = "none";
   }
 
   if (allowExit && e.code === "Enter") {
-    exitGame();   // FIXED EXIT
+    exitGame();
   }
 });
 
@@ -561,7 +563,7 @@ function gameLoop() {
 }
 gameLoop();
 
-/* Check Distance to Target */
+/* Check Distance */
 function checkProximity() {
   const rectCat = gameCat.getBoundingClientRect();
   const rectTarget = gameTarget.getBoundingClientRect();
@@ -600,27 +602,22 @@ function showEndMessage() {
   const msg = "CONGRATS YOU HAVE WON\nCATLAND RULES AND LABRAT JUST DOESN'T";
   let i = 0;
 
-  gameEndText.textContent = "";
-
   const interval = setInterval(() => {
     gameEndText.textContent = msg.substring(0, i);
     i++;
 
     if (i > msg.length) {
       clearInterval(interval);
-
-      // NOW allow exit
       allowExit = true;
       gameEndPrompt.style.display = "block";
     }
   }, 6000 / msg.length);
 }
 
-/* EXIT GAME — FIXED */
+/* EXIT GAME */
 function exitGame() {
   gameOverlay.style.display = "none";
 
-  // Reset everything
   gameStarted = false;
   gameEnded = false;
   allowExit = false;
@@ -638,7 +635,6 @@ function exitGame() {
   gameEndPrompt.style.display = "none";
   gamePrompt.style.display = "block";
 
-  // Switch back to Home tab
   document.querySelector('[data-tab="home"]').click();
 }
 </script>
