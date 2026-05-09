@@ -423,7 +423,7 @@
         <!-- End Message -->
         <div id="gameEndMessageBox">
           <div id="gameEndText"></div>
-          <div id="gameEndPrompt">PRESS ENTER TO EXIT</div>
+          <div id="gameEndPrompt" style="display:none;">PRESS ENTER TO EXIT</div>
         </div>
 
       </div>
@@ -482,53 +482,6 @@ tabs.forEach(tab => {
   });
 });
 
-/* ---------------- DEPARTMENT PANEL ---------------- */
-function toggleExt() {
-  const more = document.getElementById("extMore");
-  const toggle = document.getElementById("extToggle");
-
-  if (more.style.display === "none") {
-    more.style.display = "inline";
-    toggle.textContent = "Read less";
-  } else {
-    more.style.display = "none";
-    toggle.textContent = "Read more";
-  }
-}
-
-function toggleDeptPanel() {
-  const wrapper = document.getElementById("deptWrapper");
-  wrapper.classList.toggle("open");
-  document.body.classList.toggle("dept-open");
-}
-
-/* ---------------- DOCUMENT MODALS ---------------- */
-const docModal = document.getElementById("docModal");
-const docModal2 = document.getElementById("docModal2");
-
-function openDocumentModal() { docModal.style.display = "flex"; }
-function closeDocumentModal() { docModal.style.display = "none"; }
-
-function openDocumentModal2() { docModal2.style.display = "flex"; }
-function closeDocumentModal2() { docModal2.style.display = "none"; }
-
-docModal.addEventListener("click", e => { if (e.target === docModal) closeDocumentModal(); });
-docModal2.addEventListener("click", e => { if (e.target === docModal2) closeDocumentModal2(); });
-
-/* ---------------- SEARCH ---------------- */
-searchBar.addEventListener("input", function () {
-  const query = this.value.toLowerCase();
-  const activeTab = document.querySelector(".tab.active").dataset.tab;
-  const container = document.getElementById(activeTab);
-
-  const entries = container.querySelectorAll(".entry");
-
-  entries.forEach(entry => {
-    const title = entry.dataset.title.toLowerCase();
-    entry.style.display = title.includes(query) ? "" : "none";
-  });
-});
-
 /* ---------------- MINI GAME ---------------- */
 const gameOverlay = document.getElementById("catlandGameOverlay");
 const gameCat = document.getElementById("gameCat");
@@ -537,9 +490,11 @@ const gamePrompt = document.getElementById("gamePrompt");
 const gameAttackHint = document.getElementById("gameAttackHint");
 const gameEndBox = document.getElementById("gameEndMessageBox");
 const gameEndText = document.getElementById("gameEndText");
+const gameEndPrompt = document.getElementById("gameEndPrompt");
 
 let gameStarted = false;
 let gameEnded = false;
+let allowExit = false;
 
 let catX = 100;
 let catY = 200;
@@ -572,29 +527,29 @@ document.getElementById("startCatlandGame").onclick = () => {
 
 /* Key Handling */
 document.addEventListener("keydown", e => {
-  keys[e.key] = true;
+  keys[e.code] = true;
 
-  if (!gameStarted && e.key === " ") {
+  if (!gameStarted && e.code === "Space") {
     gameStarted = true;
     gamePrompt.style.display = "none";   // FIXED
   }
 
-  if (gameEnded && e.key === "Enter") {
+  if (allowExit && e.code === "Enter") {
     exitGame();   // FIXED EXIT
   }
 });
 
 document.addEventListener("keyup", e => {
-  keys[e.key] = false;
+  keys[e.code] = false;
 });
 
 /* Game Loop */
 function gameLoop() {
   if (gameStarted && !gameEnded) {
-    if (keys["w"] || keys["ArrowUp"]) catY -= speed;
-    if (keys["s"] || keys["ArrowDown"]) catY += speed;
-    if (keys["a"] || keys["ArrowLeft"]) catX -= speed;
-    if (keys["d"] || keys["ArrowRight"]) catX += speed;
+    if (keys["KeyW"] || keys["ArrowUp"]) catY -= speed;
+    if (keys["KeyS"] || keys["ArrowDown"]) catY += speed;
+    if (keys["KeyA"] || keys["ArrowLeft"]) catX -= speed;
+    if (keys["KeyD"] || keys["ArrowRight"]) catX += speed;
 
     gameCat.style.left = catX + "px";
     gameCat.style.top = catY + "px";
@@ -619,7 +574,7 @@ function checkProximity() {
   if (dist < 120) {
     gameAttackHint.style.display = "block";
 
-    if (keys["f"]) {
+    if (keys["KeyF"]) {
       attackTarget();
     }
   } else {
@@ -651,7 +606,13 @@ function showEndMessage() {
     gameEndText.textContent = msg.substring(0, i);
     i++;
 
-    if (i > msg.length) clearInterval(interval);
+    if (i > msg.length) {
+      clearInterval(interval);
+
+      // NOW allow exit
+      allowExit = true;
+      gameEndPrompt.style.display = "block";
+    }
   }, 6000 / msg.length);
 }
 
@@ -662,6 +623,7 @@ function exitGame() {
   // Reset everything
   gameStarted = false;
   gameEnded = false;
+  allowExit = false;
 
   catX = 100;
   catY = 200;
@@ -673,6 +635,7 @@ function exitGame() {
   gameTarget.classList.remove("disintegrate");
 
   gameEndBox.style.display = "none";
+  gameEndPrompt.style.display = "none";
   gamePrompt.style.display = "block";
 
   // Switch back to Home tab
