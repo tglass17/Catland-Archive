@@ -145,7 +145,12 @@
       display: block;
     }
 
-    /* HOME PAGE IMAGE ROW */
+    .entry {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
     .home-image-row {
       display: flex;
       justify-content: center;
@@ -155,7 +160,6 @@
       flex-wrap: wrap;
     }
 
-    /* FLAG HOVER ANIMATION */
     .flag-hover {
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
@@ -169,11 +173,9 @@
       font-weight: bold;
       margin-top: 8px;
       text-align: center;
-      font-family: "Segoe UI", Arial, sans-serif;
       color: #333;
     }
 
-    /* CENTERED HOME TEXT */
     .home-text {
       text-align: center;
       font-size: 18px;
@@ -191,7 +193,6 @@
       font-style: italic;
     }
 
-    /* MINI GAME BUTTON */
     .mini-game-wrapper {
       margin-top: 25px;
       text-align: center;
@@ -214,98 +215,6 @@
 
     .mini-game-button:hover {
       background-color: #27a447;
-    }
-
-    /* MINI GAME OVERLAY */
-    #catlandGameOverlay {
-      position: fixed;
-      inset: 0;
-      background: #021b0b;
-      display: none;
-      z-index: 3000;
-      font-family: "Courier New", monospace;
-      color: #ffffff;
-    }
-
-    #catlandGameInner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      image-rendering: pixelated;
-      overflow: hidden;
-    }
-
-    #gamePrompt {
-      position: absolute;
-      top: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 28px;
-      text-transform: uppercase;
-    }
-
-    #gameCat {
-      position: absolute;
-      width: 64px;
-      height: 64px;
-      image-rendering: pixelated;
-    }
-
-    #gameTarget {
-      position: absolute;
-      width: 220px;
-      height: auto;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      image-rendering: pixelated;
-    }
-
-    #gameAttackHint {
-      position: absolute;
-      bottom: 40px;
-      width: 100%;
-      text-align: center;
-      font-size: 20px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      display: none;
-    }
-
-    .disintegrate {
-      animation: disintegrate 0.8s forwards;
-    }
-
-    @keyframes disintegrate {
-      0% { opacity: 1; filter: blur(0px); transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0; filter: blur(6px); transform: translate(-50%, -50%) scale(1.3); }
-    }
-
-    #gameEndMessageBox {
-      position: absolute;
-      width: 80%;
-      max-width: 700px;
-      background: #041f10;
-      border: 2px solid #3cff8a;
-      padding: 20px;
-      border-radius: 8px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: none;
-      box-shadow: 0 0 18px rgba(0,0,0,0.7);
-    }
-
-    #gameEndText {
-      font-size: 20px;
-      white-space: pre-line;
-    }
-
-    #gameEndPrompt {
-      margin-top: 15px;
-      font-size: 16px;
-      text-align: right;
-      opacity: 0.8;
     }
   </style>
 </head>
@@ -365,13 +274,11 @@
 
       <div class="home-image-row">
 
-        <!-- PRESIDENT IMAGE -->
         <div style="text-align:center;">
           <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px;">
           <div class="home-label">Catland's current President</div>
         </div>
 
-        <!-- FLAG IMAGE -->
         <div style="text-align:center;">
           <img src="catland.flag.png" class="flag-hover" style="max-width:200px; border-radius:8px;">
           <div class="home-label">Catland's National Flag</div>
@@ -394,30 +301,96 @@
       </div>
 
     </div>
-        </div> <!-- END HOME TAB -->
+    </div> <!-- END HOME TAB -->
 
-    <!-- OTHER TABS -->
+
+    <!-- DOCUMENTS TAB -->
     <div id="documents" class="content">
-      <div class="entry" data-title="DOC1">
-        <div style="font-size:22px;font-weight:bold;">Example Document</div>
+      <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
+        <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
+        <button onclick="openDocumentModal()">Open Document</button>
+      </div>
+
+      <div class="entry" data-title="EXTERNAL RELATIONS REPORT 2893">
+        <div style="font-size:22px; font-weight:bold;">EXTERNAL RELATIONS REPORT 2893</div>
+        <button onclick="openDocumentModal2()">Open Document</button>
       </div>
     </div>
 
-    <div id="screenshots" class="content"></div>
-    <div id="audio" class="content"></div>
-    <div id="images" class="content"></div>
-    <div id="artifacts" class="content"></div>
-    <div id="locations" class="content"></div>
 
+    <!-- SCREENSHOTS TAB -->
+    <div id="screenshots" class="content">
+      <div class="entry" data-title="SCREENSHOT-0001">
+        <div style="font-size:22px; font-weight:bold;">SCREENSHOT-0001</div>
+        <img src="Screenshot 2026-05-08 203604.png" style="max-width:300px; border-radius:8px;">
+      </div>
+    </div>
+
+
+    <!-- AUDIO TAB -->
+    <div id="audio" class="content">
+
+      <div class="entry" data-title="CATLAND-PRESIDENTIAL-SPEECH_0001">
+        <div style="font-size:22px; font-weight:bold;">CATLAND-PRESIDENTIAL-SPEECH_0001</div>
+        <audio controls>
+          <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
+        </audio>
+        <div style="margin-top:10px; cursor:pointer; color:#4da6ff;" onclick="showTranscript()">View Transcript...</div>
+      </div>
+
+      <div class="entry" data-title="LOCKDOWN-CL_0912">
+        <div style="font-size:22px; font-weight:bold;">LOCKDOWN-CL_0912</div>
+        <audio controls>
+          <source src="lockdowncatland.mp3" type="audio/mpeg">
+        </audio>
+        <div style="margin-top:10px; font-style:italic; color:#666;">
+          Some information about this audio is <span class="redacted">REDACTED</span>.
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- IMAGES TAB -->
+    <div id="images" class="content">
+      <div class="entry" data-title="IMAGE-0001">
+        <div style="font-size:22px; font-weight:bold;">IMAGE-0001</div>
+        <img src="catland.flag.png" style="max-width:300px; border-radius:8px;">
+      </div>
+    </div>
+
+
+    <!-- ARTIFACTS TAB -->
+    <div id="artifacts" class="content">
+      <div class="entry" data-title="ARTIFACT-0001">
+        <div style="font-size:22px; font-weight:bold;">ARTIFACT-0001</div>
+        <div style="font-size:16px;">Recovered item from Catland.</div>
+      </div>
+    </div>
+
+
+    <!-- LOCATIONS TAB -->
+    <div id="locations" class="content">
+      <div class="entry" data-title="LOCATION-0001">
+        <div style="font-size:22px; font-weight:bold;">LOCATION-0001</div>
+        <div style="font-size:16px;">A known site in Catland.</div>
+      </div>
+    </div>
+
+
+    <!-- EXTRA INFO TAB -->
     <div id="extrainfo" class="content">
       <div class="big-info">Extra Information</div>
-      <div id="extraTranscriptBlock" style="display:none;"></div>
+      <div id="extraTranscriptBlock" style="display:none; font-size:18px; line-height:1.5;">
+        Transcript loading...
+      </div>
     </div>
 
   </div> <!-- END MAIN -->
 
 
-<!-- ⭐ FULLSCREEN MINI‑GAME OVERLAY (NOW OUTSIDE .main AND WORKING) -->
+
+<!-- ⭐ FULLSCREEN MINI‑GAME OVERLAY (OUTSIDE .main) -->
 <div id="catlandGameOverlay" style="position:fixed; inset:0; background:#021b0b; display:none; z-index:9999; font-family:'Courier New', monospace; color:white;">
   <div id="catlandGameInner" style="position:relative; width:100%; height:100%; overflow:hidden; image-rendering:pixelated;">
 
@@ -449,6 +422,24 @@
 </div>
 
 
+
+<!-- DOCUMENT MODALS -->
+<div id="docModal" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:5000;">
+  <div class="modal-content" style="background:white; padding:20px; border-radius:8px; position:relative;">
+    <div class="modal-close" onclick="closeDocumentModal()" style="position:absolute; top:10px; right:10px; cursor:pointer;">X</div>
+    <img src="CROSS-DEPARTMENT_REPORT1088_Redacted.png" style="max-width:600px;">
+  </div>
+</div>
+
+<div id="docModal2" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:5000;">
+  <div class="modal-content" style="background:white; padding:20px; border-radius:8px; position:relative;">
+    <div class="modal-close" onclick="closeDocumentModal2()" style="position:absolute; top:10px; right:10px; cursor:pointer;">X</div>
+    <img src="EXTERNAL RELATIONS REPORT 2893_Redacted.png" style="max-width:600px;">
+  </div>
+</div>
+
+
+
 <script>
 /* ---------------- TAB LOGIC ---------------- */
 const tabs = document.querySelectorAll(".tab");
@@ -466,7 +457,7 @@ tabs.forEach(tab => {
     });
 
     if (tab.dataset.tab !== "extrainfo") {
-      if (extraTranscriptBlock) extraTranscriptBlock.style.display = "none";
+      extraTranscriptBlock.style.display = "none";
       extraInfoTab.classList.add("hidden-tab");
     }
 
@@ -482,6 +473,14 @@ tabs.forEach(tab => {
       : "block";
   });
 });
+
+
+/* ---------------- DOCUMENT MODALS ---------------- */
+function openDocumentModal() { docModal.style.display = "flex"; }
+function closeDocumentModal() { docModal.style.display = "none"; }
+
+function openDocumentModal2() { docModal2.style.display = "flex"; }
+function closeDocumentModal2() { docModal2.style.display = "none"; }
 
 
 /* ---------------- MINI GAME ---------------- */
@@ -504,6 +503,7 @@ let speed = 4;
 
 let keys = {};
 
+
 /* Pixel Cat */
 gameCat.style.width = "64px";
 gameCat.style.height = "64px";
@@ -521,11 +521,13 @@ gameCat.style.background = `
   linear-gradient(#000,#000) 36px 20px / 8px 8px no-repeat
 `;
 
+
 /* Start Game */
 document.getElementById("startCatlandGame").onclick = () => {
   gameOverlay.style.display = "block";
   gamePrompt.style.display = "block";
 };
+
 
 /* Key Handling */
 document.addEventListener("keydown", e => {
@@ -545,6 +547,7 @@ document.addEventListener("keyup", e => {
   keys[e.code] = false;
 });
 
+
 /* Game Loop */
 function gameLoop() {
   if (gameStarted && !gameEnded) {
@@ -562,6 +565,7 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 gameLoop();
+
 
 /* Check Distance */
 function checkProximity() {
@@ -584,6 +588,7 @@ function checkProximity() {
   }
 }
 
+
 /* Attack */
 function attackTarget() {
   gameTarget.classList.add("disintegrate");
@@ -593,6 +598,7 @@ function attackTarget() {
     showEndMessage();
   }, 800);
 }
+
 
 /* Typing Effect */
 function showEndMessage() {
@@ -613,6 +619,7 @@ function showEndMessage() {
     }
   }, 6000 / msg.length);
 }
+
 
 /* EXIT GAME */
 function exitGame() {
