@@ -11,6 +11,7 @@
       transition: margin-left 0.3s ease;
     }
 
+    /* ---------------- DEPARTMENTS PANEL ---------------- */
     .dept-wrapper {
       position: fixed;
       top: 0;
@@ -70,6 +71,7 @@
       margin-left: 220px;
     }
 
+    /* ---------------- MAIN CONTENT ---------------- */
     .main {
       padding-left: 20px;
       transition: margin-left 0.3s ease;
@@ -151,6 +153,7 @@
       border-bottom: 1px solid #ddd;
     }
 
+    /* ---------------- HOME PAGE ---------------- */
     .home-image-row {
       display: flex;
       justify-content: center;
@@ -221,7 +224,7 @@
 
 <body>
 
-  <!-- DEPARTMENTS PANEL -->
+  <!-- ⭐ DEPARTMENTS PANEL (RESTORED) -->
   <div class="dept-wrapper" id="deptWrapper">
     <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
     <div class="dept-title">Departments</div>
@@ -235,7 +238,7 @@
           <span>The department is involved in Catland’s relations with the world such as its allies: USA, Japan, and France.</span>
 
           <span id="extMore" style="display:none;">
-            The department is also involved in politics and trade requests that are handled by the Foreign Trade department.
+            The department is also involved in politics and trade requests handled by the Foreign Trade department.
           </span>
 
           <div id="extToggle" style="color:#4da6ff; cursor:pointer; margin-top:6px; font-weight:bold;" onclick="toggleExt()">Read more</div>
@@ -246,7 +249,7 @@
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- ⭐ MAIN CONTENT -->
   <div class="main">
 
     <div class="header">Welcome to The Catland Archive</div>
@@ -269,7 +272,7 @@
 
     <input type="text" id="searchBar" placeholder="Search titles..." style="display:none;">
 
-    <!-- HOME TAB -->
+    <!-- ⭐ HOME TAB -->
     <div id="home" class="content active">
 
       <div class="home-image-row">
@@ -390,7 +393,7 @@
 
 
 
-<!-- ⭐ FULLSCREEN MINI‑GAME OVERLAY (OUTSIDE .main) -->
+<!-- ⭐ FULLSCREEN MINI‑GAME OVERLAY -->
 <div id="catlandGameOverlay" style="position:fixed; inset:0; background:#021b0b; display:none; z-index:9999; font-family:'Courier New', monospace; color:white;">
   <div id="catlandGameInner" style="position:relative; width:100%; height:100%; overflow:hidden; image-rendering:pixelated;">
 
