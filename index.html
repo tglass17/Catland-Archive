@@ -224,7 +224,7 @@
 
 <body>
 
-  <!-- ⭐ DEPARTMENTS PANEL (RESTORED) -->
+  <!-- ⭐ DEPARTMENTS PANEL (FULLY RESTORED) -->
   <div class="dept-wrapper" id="deptWrapper">
     <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
     <div class="dept-title">Departments</div>
@@ -444,6 +444,38 @@
 
 
 <script>
+/* ---------------- DEPARTMENTS PANEL FIX ---------------- */
+function toggleDeptPanel() {
+  const wrapper = document.getElementById("deptWrapper");
+  wrapper.classList.toggle("open");
+  document.body.classList.toggle("dept-open");
+}
+
+function toggleExt() {
+  const more = document.getElementById("extMore");
+  const toggle = document.getElementById("extToggle");
+
+  if (more.style.display === "none") {
+    more.style.display = "inline";
+    toggle.textContent = "Read less";
+  } else {
+    more.style.display = "none";
+    toggle.textContent = "Read more";
+  }
+}
+
+/* ---------------- TRANSCRIPT FIX ---------------- */
+function showTranscript() {
+  extraInfoTab.classList.remove("hidden-tab");
+  extraTranscriptBlock.style.display = "block";
+
+  document.querySelector('[data-tab="extrainfo"]').click();
+
+  extraTranscriptBlock.textContent =
+    "Transcript loading...\n\nThis is where your transcript text goes.";
+}
+
+
 /* ---------------- TAB LOGIC ---------------- */
 const tabs = document.querySelectorAll(".tab");
 const contents = document.querySelectorAll(".content");
