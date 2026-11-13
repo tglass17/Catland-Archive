@@ -1,127 +1,685 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ConnectChain</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
-<style>
-*{font-family:'Fredoka One',sans-serif;box-sizing:border-box}
-body{margin:0;background:#b7f5c3;color:#14301c;min-height:100vh}
-header{display:flex;gap:10px;align-items:center;padding:12px 20px;background:#16a34a;color:#fff;flex-wrap:wrap;position:relative;z-index:20}
-header b{font-size:28px}#out{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-input,select{font-size:18px;padding:10px 14px;border-radius:12px;border:2px solid #fff;background:#fff;color:#14301c;outline:none}
-button{font-size:18px;padding:10px 16px;border-radius:12px;border:0;background:#15803d;color:#fff;cursor:pointer}
-button.go{background:#22c55e}button.no{background:#ef4444}
-main{display:grid;grid-template-columns:1fr 360px;gap:20px;padding:20px;width:100%}@media(max-width:800px){main{grid-template-columns:1fr}}
-.panel{background:#fff;border-radius:18px;padding:20px;box-shadow:0 4px 14px #0002;margin-bottom:20px}
-#game{text-align:center;min-height:70vh}#vs{font-size:30px;margin:10px 0}#turn{font-size:24px;margin:12px}
-#chain{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;font-size:38px;min-height:80px;margin:20px 0}
-.chip{background:#dcfce7;padding:8px 20px;border-radius:14px;text-transform:capitalize}.chip:last-of-type{background:#22c55e;color:#fff}
-#word{font-size:32px;width:min(700px,92%);text-align:center;border:3px solid #16a34a;margin:10px 0}
-#oppbox{font-size:26px;margin-top:20px;padding:14px;background:#f0fdf4;border-radius:14px;min-height:60px}#opp{color:#15803d}
-.row{display:flex;justify-content:space-between;align-items:center;margin:8px 0;gap:8px;font-size:20px}
-#flash{position:fixed;top:80px;left:50%;transform:translateX(-50%);font-size:28px;pointer-events:none;opacity:0;transition:opacity 2s;z-index:60;background:#fff;padding:8px 20px;border-radius:14px}
-#flash.show{opacity:1;transition:none}.bad{color:#dc2626}.warn{color:#d97706}.ok{color:#15803d}
-#req{position:fixed;top:90px;right:20px;background:#fff;padding:18px;border-radius:16px;box-shadow:0 6px 24px #0004;display:none;z-index:40;font-size:22px;width:320px}
-#bar{height:8px;background:#22c55e;border-radius:4px;margin-top:12px}@keyframes drain{from{width:100%}to{width:0}}
-#ov{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:50;color:#fff;font-size:180px}
-#menu{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(460px,92vw);max-height:90vh;overflow:auto;background:#fff;padding:18px;border-radius:16px;display:none;z-index:70;box-shadow:0 8px 40px #0007}
-.sw{display:inline-block;width:30px;height:30px;border-radius:8px;margin:3px;cursor:pointer;border:2px solid #0003;vertical-align:middle}
-.stage{container-type:inline-size;aspect-ratio:16/9;width:100%;max-width:1200px;margin:0 auto;background:#f0fdf4;border-radius:24px;overflow:hidden}
-.sin{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4cqw;padding:2cqw;text-align:center}
-.sh{font-size:3cqw}.sv{font-size:4cqw}.sc{display:flex;flex-wrap:nowrap;gap:1.2cqw;justify-content:center;align-items:center;font-size:4cqw;height:8cqw;max-width:96cqw;overflow:hidden}.sc .chip{padding:.8cqw 2cqw;border-radius:1.6cqw}
-.st{font-size:3cqw}.sy{font-size:2.8cqw;background:#fff;border-radius:2cqw;padding:1.4cqw 3cqw;min-width:50cqw}.sf{font-size:2.2cqw;height:7cqw;overflow:hidden}.sb{font-size:2.4cqw;padding:1cqw 3cqw;border-radius:1.6cqw}
-.nm{cursor:pointer}.c-white{color:#1f2937}.c-blue{color:#2563eb}.c-red{color:#dc2626}.c-yellow{color:#ca8a04}.c-green{color:#16a34a}.c-orange{color:#ea580c}
-.c-blueg,.c-redorangeg,.c-greenhaze,.c-rainbow,.owner{-webkit-background-clip:text;background-clip:text;color:transparent;background-size:300% 100%;animation:mv 4s linear infinite}
-.c-blueg{background-image:linear-gradient(90deg,#2563eb,#06b6d4,#2563eb)}.c-redorangeg{background-image:linear-gradient(90deg,#dc2626,#fb923c,#dc2626)}
-.c-greenhaze{background-image:linear-gradient(90deg,#14532d,#4ade80,#166534,#86efac,#14532d)}
-.c-rainbow,.owner{background-image:linear-gradient(90deg,red,orange,#eab308,lime,cyan,blue,violet,red)}
-.owner{filter:drop-shadow(0 0 6px #ff0)}@keyframes mv{to{background-position:300% 0}}
-.tag{font-size:13px;padding:2px 8px;border-radius:6px;margin-left:6px;color:#000;background-size:200% 100%;animation:mv2 3s linear infinite alternate}@keyframes mv2{to{background-position:100% 0}}
-</style></head><body>
-<header><b>ConnectChain</b>
-<div id="out"><input id="gname" placeholder="type username here" maxlength="16" autocomplete="off"><button class="go" onclick="guest()">Enter</button>
-<span>or</span><input id="an" placeholder="account name" size="12" autocomplete="off"><input id="ap" type="password" placeholder="password" size="10">
-<button onclick="acct('signup')">Sign up</button><button onclick="acct('login')">Log in</button><button id="past" onclick="past()" style="display:none">Log in from past</button></div>
-<span id="me"></span><span id="conn" style="margin-left:auto">● connecting…</span></header>
-<main><div><div class="panel" id="game">
-<div id="welcome"><h1>Word chain battles</h1><p style="font-size:22px">Make a username up top, then press <b>Battle!</b> next to a player. <b>Guests lose their XP when they leave — sign up to keep it.</b> Say a word that connects to the last one — cat → mouse → trap → door. 3 lives each!</p></div>
-<div id="spectate" class="stage" style="display:none"><div class="sin"><div class="sh">👁 Watching a match</div><div id="svs" class="sv"></div><div id="schain" class="sc"></div><div id="sturn" class="st"></div><div id="styp" class="sy"></div><div id="sfeed" class="sf"></div><button class="sb" onclick="stopWatch()">Back to lobby</button></div></div>
-<div id="arena" style="display:none"><div id="vs"></div><div id="chain"></div><div id="turn"></div>
-<input id="word" placeholder="type your word..." autocomplete="off" disabled><br><button class="go" onclick="sub()">Go</button> <button class="no" onclick="send({t:'forfeit'})">Forfeit</button> <button id="back" style="display:none" onclick="back()">Back to lobby</button>
-<div id="oppbox">Opponent typing: <span id="opp"></span></div></div></div></div>
-<div><div class="panel"><h2 style="margin-top:0">Online</h2><div id="list">Nobody yet…</div></div>
-<div class="panel" id="shop" style="display:none"><div id="colbox"><b>Name color</b><br><select id="col" onchange="send({t:'color',color:this.value})"></select></div>
-<p><b>XP multipliers</b></p><button onclick="send({t:'buy',mult:1.5})">1.5x (500 XP)</button> <button onclick="send({t:'buy',mult:2})">2x (1000 XP)</button>
-<div id="own" style="display:none"><p><b>Owner tag</b></p><button onclick="openMenu('__me')">Edit my tag colors</button></div></div></div></main>
-<div id="req"><b id="reqname"></b> wants to battle you!<br><br><button class="go" onclick="reply('accept')">Accept</button> <button class="no" onclick="reply('deny')">Deny</button><div id="bar"></div></div>
-<div id="ov"></div><div id="flash"></div><div id="menu"></div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Catland Archive</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      transition: margin-left 0.3s ease;
+    }
+
+    /* ---------------- DEPARTMENTS PANEL ---------------- */
+    .dept-wrapper {
+      position: fixed;
+      top: 0;
+      left: -220px;
+      width: 220px;
+      height: 100vh;
+      background-color: #2c2c2c;
+      color: white;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .dept-wrapper.open {
+      left: 0;
+    }
+
+    .dept-toggle {
+      position: absolute;
+      top: 50%;
+      right: -40px;
+      transform: translateY(-50%);
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-weight: bold;
+      cursor: pointer;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    .dept-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0 10px 0;
+      text-align: center;
+    }
+
+    .dept-list {
+      height: 80vh;
+      overflow-y: auto;
+      padding: 0 10px;
+    }
+
+    .dept-item {
+      padding: 8px;
+      border-bottom: 1px solid #555;
+      font-size: 16px;
+    }
+
+    .dept-item:last-child {
+      border-bottom: none;
+    }
+
+    body.dept-open {
+      margin-left: 220px;
+    }
+
+    /* ---------------- MAIN CONTENT ---------------- */
+    .main {
+      padding-left: 20px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .header {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 36px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    .description {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+      color: #444;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background-color: #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background-color: #333;
+      color: white;
+    }
+
+    .hidden-tab {
+      display: none;
+    }
+
+    #searchBar {
+      width: 60%;
+      margin: 20px auto 10px auto;
+      display: block;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+
+    .content {
+      width: 70%;
+      margin: 0 auto 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      height: 400px;
+      overflow-y: scroll;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      display: none;
+      position: relative;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .entry {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* ---------------- HOME PAGE ---------------- */
+    .home-image-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .flag-hover {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .flag-hover:hover {
+      transform: scale(1.10);
+      box-shadow: 0 0 15px rgba(0,0,0,0.25);
+    }
+
+    .home-label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 8px;
+      text-align: center;
+      color: #333;
+    }
+
+    .home-text {
+      text-align: center;
+      font-size: 18px;
+      color: #444;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .home-note {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    .mini-game-wrapper {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .mini-game-button {
+      display: inline-block;
+      background-color: #1f8b3b;
+      color: #ffffff;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .mini-game-button:hover {
+      background-color: #27a447;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ⭐ DEPARTMENTS PANEL -->
+  <div class="dept-wrapper" id="deptWrapper">
+    <div class="dept-toggle" onclick="toggleDeptPanel()">Departments</div>
+    <div class="dept-title">Departments</div>
+
+    <div class="dept-list" id="deptList">
+      <div class="dept-item" style="text-align:center; border-bottom:none; padding-bottom:20px;">
+        <img src="bali_indonesia.png" style="max-width:120px; margin-bottom:10px;">
+        <div style="font-size:20px; font-weight:bold; margin-bottom:8px;">External Relationships</div>
+
+        <div style="font-size:14px; color:#ccc; line-height:1.4;">
+          <span>The department is involved in Catland’s relations with the world such as its allies: USA, Japan, and France.</span>
+
+          <span id="extMore" style="display:none;">
+            The department is also involved in politics and trade requests handled by the Foreign Trade department.
+          </span>
+
+          <div id="extToggle" style="color:#4da6ff; cursor:pointer; margin-top:6px; font-weight:bold;" onclick="toggleExt()">Read more</div>
+
+          <div class="info-button" onclick="goToInfo()">INFO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⭐ MAIN CONTENT -->
+  <div class="main">
+
+    <div class="header">Welcome to The Catland Archive</div>
+
+    <div class="description">
+      This archive contains documents, screenshots, audio files, images, artifacts, and locations from the nations of Catland, Dogland, and the continent of Petland.<br>
+      <em>Note: Some entries may be partially redacted.</em>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="home">Home</div>
+      <div class="tab" data-tab="documents">Documents</div>
+      <div class="tab" data-tab="screenshots">Screenshots</div>
+      <div class="tab" data-tab="audio">Audio</div>
+      <div class="tab" data-tab="images">Images</div>
+      <div class="tab" data-tab="artifacts">Artifacts</div>
+      <div class="tab" data-tab="locations">Locations</div>
+      <div class="tab hidden-tab" data-tab="extrainfo" id="extraInfoTab">Extra Info</div>
+    </div>
+
+    <input type="text" id="searchBar" placeholder="Search titles..." style="display:none;">
+
+    <!-- ⭐ HOME TAB -->
+    <div id="home" class="content active">
+
+      <div class="home-image-row">
+
+        <div style="text-align:center;">
+          <img src="output-onlinetools.png" style="max-width:200px; border-radius:8px;">
+          <div class="home-label">Catland's current President</div>
+        </div>
+
+        <div style="text-align:center;">
+          <img src="catland.flag.png" class="flag-hover" style="max-width:200px; border-radius:8px;">
+          <div class="home-label">Catland's National Flag</div>
+        </div>
+
+      </div>
+
+      <div class="home-text">
+        This is where we collect audio, screenshots, files, artifacts, and more from the nations of Catland, Dogland, and the continent of Petland.
+      </div>
+
+      <div class="home-note">
+        Note: Some of the things displayed will be redacted.
+      </div>
+
+      <div class="mini-game-wrapper">
+        <button class="mini-game-button" id="startCatlandGame">
+          Play Catland Mini Game
+        </button>
+      </div>
+
+    </div>
+    </div> <!-- END HOME TAB -->
+
+
+    <!-- DOCUMENTS TAB -->
+    <div id="documents" class="content">
+      <div class="entry" data-title="CROSS-DEPARTMENT_REPORT1088">
+        <div style="font-size:22px; font-weight:bold;">CROSS-DEPARTMENT_REPORT1088</div>
+        <button onclick="openDocumentModal()">Open Document</button>
+      </div>
+
+      <div class="entry" data-title="EXTERNAL RELATIONS REPORT 2893">
+        <div style="font-size:22px; font-weight:bold;">EXTERNAL RELATIONS REPORT 2893</div>
+        <button onclick="openDocumentModal2()">Open Document</button>
+      </div>
+    </div>
+
+
+    <!-- SCREENSHOTS TAB -->
+    <div id="screenshots" class="content">
+      <!-- No screenshot entries -->
+    </div>
+
+
+    <!-- AUDIO TAB -->
+    <div id="audio" class="content">
+
+      <div class="entry" data-title="CATLAND-PRESIDENTIAL-SPEECH_0001">
+        <div style="font-size:22px; font-weight:bold;">CATLAND-PRESIDENTIAL-SPEECH_0001</div>
+        <audio controls>
+          <source src="19700121_0451_691d26a4890081919129fd81f90d2ac0.mp3" type="audio/mpeg">
+        </audio>
+        <div style="margin-top:10px; cursor:pointer; color:#4da6ff;" onclick="showTranscript()">View Transcript...</div>
+      </div>
+
+      <div class="entry" data-title="LOCKDOWN-CL_0912">
+        <div style="font-size:22px; font-weight:bold;">LOCKDOWN-CL_0912</div>
+        <audio controls>
+          <source src="lockdowncatland.mp3" type="audio/mpeg">
+        </audio>
+        <div style="margin-top:10px; font-style:italic; color:#666;">
+          Some information about this audio is <span class="redacted">REDACTED</span>.
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- IMAGES TAB -->
+    <div id="images" class="content">
+      <div class="entry" data-title="IMAGE-0001">
+        <div style="font-size:22px; font-weight:bold;">IMAGE-0001</div>
+        <img src="catland.flag.png" style="max-width:300px; border-radius:8px;">
+      </div>
+    </div>
+
+
+    <!-- ARTIFACTS TAB -->
+    <div id="artifacts" class="content">
+      <div class="entry" data-title="ARTIFACT-0001">
+        <div style="font-size:22px; font-weight:bold;">ARTIFACT-0001</div>
+        <div style="font-size:16px; margin-bottom:10px;">
+          The Catland Border — after the Dog Slapping incident, soon enough the Border Act was in place.
+        </div>
+        <img src="CatlandBorder.png" style="max-width:300px; border-radius:8px;">
+      </div>
+    </div>
+
+
+    <!-- LOCATIONS TAB -->
+    <div id="locations" class="content">
+      <div class="entry" data-title="LOCATION-0001">
+        <div style="font-size:22px; font-weight:bold;">LOCATION-0001</div>
+        <div style="font-size:16px;">A known site in Catland.</div>
+      </div>
+    </div>
+
+
+    <!-- EXTRA INFO TAB -->
+    <div id="extrainfo" class="content">
+      <div class="big-info">Extra Information</div>
+      <div id="extraTranscriptBlock" style="display:none; font-size:18px; line-height:1.5;">
+        Transcript loading...
+      </div>
+    </div>
+
+  </div> <!-- END MAIN -->
+
+
+
+<!-- ⭐ FULLSCREEN MINI‑GAME OVERLAY -->
+<div id="catlandGameOverlay" style="position:fixed; inset:0; background:#021b0b; display:none; z-index:9999; font-family:'Courier New', monospace; color:white;">
+  <div id="catlandGameInner" style="position:relative; width:100%; height:100%; overflow:hidden; image-rendering:pixelated;">
+
+    <div id="gamePrompt" style="position:absolute; top:20px; width:100%; text-align:center; font-size:28px;">
+      PRESS SPACE TO BEGIN!
+    </div>
+
+    <div id="gameCat"></div>
+
+    <img id="gameTarget" src="Screenshot 2026-05-08 203604.png"
+         style="position:absolute; width:220px; left:50%; top:50%; transform:translate(-50%, -50%); image-rendering:pixelated;">
+
+    <div id="gameAttackHint"
+         style="position:absolute; bottom:40px; width:100%; text-align:center; font-size:20px; display:none;">
+      PRESS F TO ATTACK
+    </div>
+
+    <div id="gameEndMessageBox"
+         style="position:absolute; width:80%; max-width:700px; background:#041f10; border:2px solid #3cff8a;
+                padding:20px; border-radius:8px; top:50%; left:50%; transform:translate(-50%, -50%);
+                display:none; box-shadow:0 0 18px rgba(0,0,0,0.7);">
+      <div id="gameEndText" style="font-size:20px; white-space:pre-line;"></div>
+      <div id="gameEndPrompt" style="margin-top:15px; font-size:16px; text-align:right; opacity:0.8; display:none;">
+        PRESS ENTER TO EXIT
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- DOCUMENT MODALS -->
+<div id="docModal" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:5000;">
+  <div class="modal-content" style="background:white; padding:20px; border-radius:8px; position:relative;">
+    <div class="modal-close" onclick="closeDocumentModal()" style="position:absolute; top:10px; right:10px; cursor:pointer;">X</div>
+    <img src="CROSS-DEPARTMENT_REPORT1088_Redacted.png" style="max-width:600px;">
+  </div>
+</div>
+
+<div id="docModal2" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:5000;">
+  <div class="modal-content" style="background:white; padding:20px; border-radius:8px; position:relative;">
+    <div class="modal-close" onclick="closeDocumentModal2()" style="position:absolute; top:10px; right:10px; cursor:pointer;">X</div>
+    <img src="EXTERNAL RELATIONS REPORT 2893_Redacted.png" style="max-width:600px;">
+  </div>
+</div>
+
+
+
 <script>
-const $=id=>document.getElementById(id);let lastList=[],ws,you,ot={c1:'#ff0080',c2:'#00d4ff'},colors=[],reqT,myTurn=false,live=false;
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function toast(t,k){const f=$('flash');f.textContent=t;f.className='show '+(k||'bad');clearTimeout(toast.t);toast.t=setTimeout(()=>f.className='',3000)}
-function send(o){if(ws&&ws.readyState==1){ws.send(JSON.stringify(o));return true}toast('Still connecting… the server may be waking up, wait about 30 seconds.','warn');return false}
-function conn(){ws=new WebSocket(location.origin.replace('http','ws'));
- ws.onopen=()=>{$('conn').textContent='● online';if(localStorage.cctk){$('past').style.display='';ws.send(JSON.stringify({t:'resume',tk:localStorage.cctk}))}};
- ws.onmessage=e=>on(JSON.parse(e.data));ws.onclose=()=>{you=null;$('out').style.display='';$('me').innerHTML='';$('conn').textContent='● reconnecting…';setTimeout(conn,2000)}}conn();
-const guest=()=>send({t:'guest',name:$('gname').value.trim()}),acct=t=>send({t,name:$('an').value.trim(),pass:$('ap').value}),past=()=>send({t:'resume',tk:localStorage.cctk});
-$('gname').onkeydown=e=>{if(e.key=='Enter')guest()};
-function nm(u){const o=u.owner,t=u.tag?`<span class="tag" style="background-image:linear-gradient(90deg,${o?ot.c1:(u.tc1||'#ddd')},${o?ot.c2:(u.tc2||'#aaa')},${o?ot.c1:(u.tc1||'#ddd')})">${esc(u.tag)}</span>`:'';
- return `<span class="nm ${o?'owner':'c-'+u.color}" data-n="${esc(u.name)}">${esc(u.dn||u.name)}</span>${t}`}
-const xpOf=u=>u.owner?'∞':u.xp;
-function chall(n){if(send({t:'challenge',to:n}))toast('Request sent to '+((lastList.find(x=>x.name==n)||{}).dn||n)+' — waiting up to 20 seconds…','ok')}
-function showReq(from,d){$('reqname').textContent=d||from;$('req').dataset.from=from;$('req').style.display='block';const b=$('bar');b.style.animation='none';void b.offsetWidth;b.style.animation='drain 20s linear forwards';clearTimeout(reqT);reqT=setTimeout(hideReq,20000)}
-function hideReq(){$('req').style.display='none';clearTimeout(reqT)}
-function reply(t){send({t,from:$('req').dataset.from});hideReq()}
-function countdown(opp){$('spectate').style.display='none';$('welcome').style.display='none';$('arena').style.display='';$('back').style.display='none';$('vs').innerHTML='You vs '+nm(opp);$('chain').innerHTML='';$('turn').textContent='Get ready!';$('word').value='';$('word').disabled=true;$('opp').textContent='';
- const ov=$('ov');ov.style.display='flex';let n=3;ov.textContent=n;const iv=setInterval(()=>{n--;ov.textContent=n>0?n:'GO!';if(n<0){clearInterval(iv);ov.style.display='none'}},1000)}
-function watch(n){$('sfeed').innerHTML='';send({t:'watch',who:n})}
-function stopWatch(){send({t:'unwatch'});$('spectate').style.display='none';$('welcome').style.display=''}
-function specRender(m){const[a,b]=m.p;$('svs').innerHTML=`${nm(a)} ${'❤️'.repeat(m.lives[0])} &nbsp; vs &nbsp; ${nm(b)} ${'❤️'.repeat(m.lives[1])}`;
- $('schain').innerHTML=m.chain.slice(-4).map(w=>`<span class="chip">${esc(w)}</span>`).join('<span>→</span>');
- $('sturn').textContent=m.live?(m.turn==0?(a.dn||a.name):(b.dn||b.name))+"'s turn":'Match is starting…';
- $('styp').innerHTML=`<div>${nm(a)}: <span id="styp0"></span></div><div>${nm(b)}: <span id="styp1"></span></div>`}
-function back(){$('arena').style.display='none';$('welcome').style.display=''}
-function on(m){
- if(m.t=='me'){you=m.me;if(m.colors)colors=m.colors;$('out').style.display='none';$('shop').style.display='';$('own').style.display=you.owner?'':'none';$('colbox').style.display=you.owner?'none':'';
-  $('me').innerHTML=nm(you)+` <span class="nm" data-n="${esc(you.name)}" title="Edit display name">✏️</span>`+` · ${xpOf(you)} XP · ${you.mult}x`;
-  $('col').innerHTML=colors.filter(c=>you.xp>=c[1]).map(c=>`<option ${c[0]==you.color?'selected':''}>${c[0]}</option>`).join('')}
- if(m.t=='badtoken'){localStorage.removeItem('cctk');$('past').style.display='none'}
- if(m.t=='token')localStorage.cctk=m.tk;
- if(m.t=='lobby'){ot=m.ownerTag;lastList=m.list;$('list').innerHTML=m.list.map(u=>`<div class="row"><span>${nm(u)} <small>${xpOf(u)}</small></span>${you&&u.name!=you.name?(u.busy?`<small>in battle</small> <button onclick="watch('${esc(u.name)}')">👁 Watch</button>`:`<button class="go" onclick="chall('${esc(u.name)}')">Battle!</button>`):''}</div>`).join('')}
- if(m.t=='flash')toast(m.text,m.kind);
- if(m.t=='challenge')showReq(m.from,m.dn);
- if(m.t=='chalgone'&&$('req').dataset.from==m.from)hideReq();
- if(m.t=='noresp')toast(m.name+' did not respond','bad');
- if(m.t=='denied')toast(m.name+' denied your battle request','bad');
- if(m.t=='countdown'){hideReq();countdown(m.opp)}
- if(m.t=='battle'){live=true;myTurn=m.turn==m.you;$('word').disabled=false;
-  $('chain').innerHTML=m.chain.map(w=>`<span class="chip">${esc(w)}</span>`).join('<span>→</span>');
-  $('vs').innerHTML=`${nm(you)} ${'❤️'.repeat(m.lives[m.you])} &nbsp; vs &nbsp; ${nm(m.opp)} ${'❤️'.repeat(m.lives[1-m.you])}`;
-  $('turn').textContent=myTurn?'YOUR TURN — type a word that connects!':'Their turn…';$('opp').textContent='';if(myTurn)$('word').focus()}
- if(m.t=='spec'){hideReq();$('welcome').style.display='none';$('arena').style.display='none';$('spectate').style.display='';specRender(m)}
- if(m.t=='spectype'){const e=$('styp'+m.who);if(e)e.textContent=m.text}
- if(m.t=='specmsg'){const f=$('sfeed');f.insertAdjacentHTML('afterbegin',`<div class="bad">${esc(m.text)}</div>`);while(f.children.length>3)f.lastChild.remove()}
- if(m.t=='specover')$('sturn').textContent='🏁 '+m.winner+' won the match!';
- if(m.t=='opptype')$('opp').textContent=m.text;
- if(m.t=='over'){live=false;$('word').disabled=true;$('turn').textContent=m.win?'🎉 You win! +100 XP':'You lost. Try again!';$('back').style.display=''}
- if(m.t=='banned')document.body.innerHTML='<h1 style="padding:40px">⛔ You have been temporarily banned for using bad words.</h1>'}
-function sub(){if(!live)return;if(!myTurn)return toast("Wait for your turn!",'warn');send({t:'submit',word:$('word').value});$('word').value='';send({t:'typing',text:''})}
-$('word').oninput=e=>send({t:'typing',text:e.target.value});$('word').onkeydown=e=>{if(e.key=='Enter')sub()};
-let tagSel=['#dddddd','#aaaaaa'],tagTo='';
-const SW=['#ef4444','#f97316','#facc15','#22c55e','#06b6d4','#3b82f6','#8b5cf6','#ec4899','#ffffff','#111827','#dddddd','#aaaaaa'];
-const swRow=i=>SW.map(c=>`<span class="sw" style="background:${c}" onclick="pickC(${i},'${c}')"></span>`).join('')+`<input type="color" value="${tagSel[i]}" oninput="pickC(${i},this.value)">`;
-function prev(){const p=$('pv'),t=$('tg');p.style.backgroundImage=`linear-gradient(90deg,${tagSel[0]},${tagSel[1]},${tagSel[0]})`;p.textContent=(t&&t.value)||(tagTo=='__me'?'OWNER':'TAG')}
-function pickC(i,c){tagSel[i]=c;prev()}
-function openMenu(n){tagTo=n;const me=n=='__me',cur=lastList.find(x=>x.name==n)||{};
- tagSel=me?[ot.c1,ot.c2]:[cur.tc1||'#dddddd',cur.tc2||'#aaaaaa'];
- const m=$('menu');m.style.display='block';
- m.innerHTML=`<div style="text-align:right"><button class="no" onclick="closeMenu()">✕</button></div><h3 style="margin:0 0 10px">${me?'My owner tag':esc(n)}</h3>`+
- (me?'':`Tag text: <input id="tg" maxlength="16" value="${esc(cur.tag||'')}" oninput="prev()"><br>`)+
- `<p>Color 1:<br>${swRow(0)}</p><p>Color 2:<br>${swRow(1)}</p><p>Preview: <span id="pv" class="tag" style="font-size:18px"></span></p><button class="go" onclick="saveTag()">Save tag</button> `+
- (me?'':`<button class="no" onclick="saveTag(true)">Remove tag</button><hr>XP: <input id="gx" type="number" value="100" style="width:110px"> <button onclick="send({t:'grant',to:'${esc(n)}',xp:gx.value})">Grant XP</button>`);
- prev()}
-function closeMenu(){$('menu').style.display='none'}
-function saveTag(rm){if(tagTo=='__me')send({t:'ownertag',c1:tagSel[0],c2:tagSel[1]});else send({t:'settag',to:tagTo,text:rm?'':$('tg').value,c1:tagSel[0],c2:tagSel[1]});toast(rm?'Tag removed':'Tag saved','ok');closeMenu()}
-function openNameEdit(){const m=$('menu');m.style.display='block';
- m.innerHTML=`<div style="text-align:right"><button class="no" onclick="closeMenu()">✕</button></div><h3 style="margin:0 0 10px">Edit display name</h3><p>Your username <b>${esc(you.name)}</b> stays the same. This only changes the name other people see.</p><input id="dnm" maxlength="20" value="${esc(you.dn||you.name)}" style="width:100%" onkeydown="if(event.key=='Enter')saveName()"><p><button class="go" onclick="saveName()">Save</button> <button onclick="saveName(true)">Reset to username</button></p>`;$('dnm').focus()}
-function saveName(r){send({t:'setdisplay',text:r?'':$('dnm').value});closeMenu()}
-document.onclick=e=>{const m=$('menu');if(m.style.display=='block'){if(!m.contains(e.target))closeMenu();return}
- const n=e.target.dataset&&e.target.dataset.n;if(!n||!you)return;if(n==you.name)return openNameEdit();if(you.owner)openMenu(n)};
-</script></body></html>
+/* ---------------- DEPARTMENTS PANEL FIX ---------------- */
+function toggleDeptPanel() {
+  const wrapper = document.getElementById("deptWrapper");
+  wrapper.classList.toggle("open");
+  document.body.classList.toggle("dept-open");
+}
+
+function toggleExt() {
+  const more = document.getElementById("extMore");
+  const toggle = document.getElementById("extToggle");
+
+  if (more.style.display === "none") {
+    more.style.display = "inline";
+    toggle.textContent = "Read less";
+  } else {
+    more.style.display = "none";
+    toggle.textContent = "Read more";
+  }
+}
+
+/* ---------------- TRANSCRIPT FIX ---------------- */
+function showTranscript() {
+  extraInfoTab.classList.remove("hidden-tab");
+  extraTranscriptBlock.style.display = "block";
+
+  document.querySelector('[data-tab="extrainfo"]').click();
+
+  extraTranscriptBlock.textContent =
+    "Transcript loading...\n\nThis is where your transcript text goes.";
+}
+
+
+/* ---------------- TAB LOGIC ---------------- */
+const tabs = document.querySelectorAll(".tab");
+const contents = document.querySelectorAll(".content");
+const searchBar = document.getElementById("searchBar");
+const extraInfoTab = document.getElementById("extraInfoTab");
+const extraTranscriptBlock = document.getElementById("extraTranscriptBlock");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+
+    document.querySelectorAll("audio").forEach(a => {
+      a.pause();
+      a.currentTime = 0;
+    });
+
+    if (tab.dataset.tab !== "extrainfo") {
+      extraTranscriptBlock.style.display = "none";
+      extraInfoTab.classList.add("hidden-tab");
+    }
+
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    contents.forEach(c => c.classList.remove("active"));
+    document.getElementById(tab.dataset.tab).classList.add("active");
+
+    searchBar.style.display =
+      (tab.dataset.tab === "home" || tab.dataset.tab === "extrainfo")
+      ? "none"
+      : "block";
+  });
+});
+
+
+/* ---------------- DOCUMENT MODALS ---------------- */
+function openDocumentModal() { docModal.style.display = "flex"; }
+function closeDocumentModal() { docModal.style.display = "none"; }
+
+function openDocumentModal2() { docModal2.style.display = "flex"; }
+function closeDocumentModal2() { docModal2.style.display = "none"; }
+
+
+/* ---------------- MINI GAME ---------------- */
+const gameOverlay = document.getElementById("catlandGameOverlay");
+const gameCat = document.getElementById("gameCat");
+const gameTarget = document.getElementById("gameTarget");
+const gamePrompt = document.getElementById("gamePrompt");
+const gameAttackHint = document.getElementById("gameAttackHint");
+const gameEndBox = document.getElementById("gameEndMessageBox");
+const gameEndText = document.getElementById("gameEndText");
+const gameEndPrompt = document.getElementById("gameEndPrompt");
+
+let gameStarted = false;
+let gameEnded = false;
+let allowExit = false;
+
+let catX = 100;
+let catY = 200;
+let speed = 4;
+
+let keys = {};
+
+
+/* Pixel Cat */
+gameCat.style.width = "64px";
+gameCat.style.height = "64px";
+gameCat.style.position = "absolute";
+gameCat.style.left = catX + "px";
+gameCat.style.top = catY + "px";
+gameCat.style.imageRendering = "pixelated";
+gameCat.style.background = `
+  linear-gradient(#000,#000) 8px 0 / 48px 8px no-repeat,
+  linear-gradient(#000,#000) 0 8px / 8px 48px no-repeat,
+  linear-gradient(#fff,#fff) 8px 8px / 48px 48px no-repeat,
+  linear-gradient(#000,#000) 56px 8px / 8px 48px no-repeat,
+  linear-gradient(#000,#000) 8px 56px / 48px 8px no-repeat,
+  linear-gradient(#000,#000) 20px 20px / 8px 8px no-repeat,
+  linear-gradient(#000,#000) 36px 20px / 8px 8px no-repeat
+`;
+
+
+/* Start Game */
+document.getElementById("startCatlandGame").onclick = () => {
+  gameOverlay.style.display = "block";
+  gamePrompt.style.display = "block";
+};
+
+
+/* Key Handling */
+document.addEventListener("keydown", e => {
+  keys[e.code] = true;
+
+  if (!gameStarted && e.code === "Space") {
+    gameStarted = true;
+    gamePrompt.style.display = "none";
+  }
+
+  if (allowExit && e.code === "Enter") {
+    exitGame();
+  }
+});
+
+document.addEventListener("keyup", e => {
+  keys[e.code] = false;
+});
+
+
+/* Game Loop */
+function gameLoop() {
+  if (gameStarted && !gameEnded) {
+    if (keys["KeyW"] || keys["ArrowUp"]) catY -= speed;
+    if (keys["KeyS"] || keys["ArrowDown"]) catY += speed;
+    if (keys["KeyA"] || keys["ArrowLeft"]) catX -= speed;
+    if (keys["KeyD"] || keys["ArrowRight"]) catX += speed;
+
+    gameCat.style.left = catX + "px";
+    gameCat.style.top = catY + "px";
+
+    checkProximity();
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+gameLoop();
+
+
+/* Check Distance */
+function checkProximity() {
+  const rectCat = gameCat.getBoundingClientRect();
+  const rectTarget = gameTarget.getBoundingClientRect();
+
+  const dist = Math.hypot(
+    rectCat.x - rectTarget.x,
+    rectCat.y - rectTarget.y
+  );
+
+  if (dist < 120) {
+    gameAttackHint.style.display = "block";
+
+    if (keys["KeyF"]) {
+      attackTarget();
+    }
+  } else {
+    gameAttackHint.style.display = "none";
+  }
+}
+
+
+/* Attack */
+function attackTarget() {
+  gameTarget.classList.add("disintegrate");
+
+  setTimeout(() => {
+    gameTarget.style.display = "none";
+    showEndMessage();
+  }, 800);
+}
+
+
+/* Typing Effect */
+function showEndMessage() {
+  gameEnded = true;
+  gameEndBox.style.display = "block";
+
+  const msg = "CONGRATS YOU HAVE WON\nCATLAND RULES AND LABRAT JUST DOESN'T";
+  let i = 0;
+
+  const interval = setInterval(() => {
+    gameEndText.textContent = msg.substring(0, i);
+    i++;
+
+    if (i > msg.length) {
+      clearInterval(interval);
+      allowExit = true;
+      gameEndPrompt.style.display = "block";
+    }
+  }, 6000 / msg.length);
+}
+
+
+/* EXIT GAME */
+function exitGame() {
+  gameOverlay.style.display = "none";
+
+  gameStarted = false;
+  gameEnded = false;
+  allowExit = false;
+
+  catX = 100;
+  catY = 200;
+
+  gameCat.style.left = catX + "px";
+  gameCat.style.top = catY + "px";
+
+  gameTarget.style.display = "block";
+  gameTarget.classList.remove("disintegrate");
+
+  gameEndBox.style.display = "none";
+  gameEndPrompt.style.display = "none";
+  gamePrompt.style.display = "block";
+
+  document.querySelector('[data-tab="home"]').click();
+}
+</script>
+
+</body>
+</html>
